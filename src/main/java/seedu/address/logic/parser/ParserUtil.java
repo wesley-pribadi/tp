@@ -74,7 +74,7 @@ public class ParserUtil {
     public static MatricNumber parseAddress(String address) throws ParseException {
         requireNonNull(address);
         String trimmedAddress = address.trim();
-        if (!MatricNumber.isValidAddress(trimmedAddress)) {
+        if (!MatricNumber.isValidMatricNumber(trimmedAddress)) {
             throw new ParseException(MatricNumber.MESSAGE_CONSTRAINTS);
         }
         return new MatricNumber(trimmedAddress);

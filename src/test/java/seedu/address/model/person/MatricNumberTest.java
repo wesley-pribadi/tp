@@ -20,18 +20,18 @@ public class MatricNumberTest {
     }
 
     @Test
-    public void isValidAddress() {
+    public void isValidMatricNumber() {
         // null address
-        assertThrows(NullPointerException.class, () -> MatricNumber.isValidAddress(null));
+        assertThrows(NullPointerException.class, () -> MatricNumber.isValidMatricNumber(null));
 
         // invalid addresses
-        assertFalse(MatricNumber.isValidAddress("")); // empty string
-        assertFalse(MatricNumber.isValidAddress(" ")); // spaces only
+        assertFalse(MatricNumber.isValidMatricNumber("")); // empty string
+        assertFalse(MatricNumber.isValidMatricNumber(" ")); // spaces only
 
         // valid addresses
-        assertTrue(MatricNumber.isValidAddress("Blk 456, Den Road, #01-355"));
-        assertTrue(MatricNumber.isValidAddress("-")); // one character
-        assertTrue(MatricNumber.isValidAddress("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long address
+        assertTrue(MatricNumber.isValidMatricNumber("Blk 456, Den Road, #01-355"));
+        assertTrue(MatricNumber.isValidMatricNumber("-")); // one character
+        assertTrue(MatricNumber.isValidMatricNumber("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long address
     }
 
     @Test

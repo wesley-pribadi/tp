@@ -22,23 +22,19 @@ public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                new MatricNumber("a0102035j"),
-                getTagSet("friends"), getClassSpaceNameSet("T01")),
+                new MatricNumber("a0102035j"), getClassSpaceNameSet("T01"), getTagSet("friends")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                new MatricNumber("a9999999J"),
-                getTagSet("colleagues", "friends"), getClassSpaceNameSet("T01", "Project-Team")),
+                new MatricNumber("a9999999J"), getClassSpaceNameSet("T01", "Project-Team"),
+                getTagSet("colleagues", "friends")),
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
-                new MatricNumber("A1002345U"),
-                getTagSet("neighbours"), getClassSpaceNameSet("T02")),
+                new MatricNumber("A1002345U"), getClassSpaceNameSet("T02"), getTagSet("neighbours")),
             new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
-                new MatricNumber("A0408987J"),
-                getTagSet("family")),
+                new MatricNumber("A0408987J"), getTagSet("family")),
             new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
-                new MatricNumber("A0304556L"),
-                getTagSet("classmates"), getClassSpaceNameSet("T02")),
+                new MatricNumber("A0304556L"), getClassSpaceNameSet("T02"), getTagSet("classmates")),
             new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
-                new MatricNumber("A0504887J"),
-                getTagSet("colleagues"), getClassSpaceNameSet("Project-Team"))
+                new MatricNumber("A0504887J"), getClassSpaceNameSet("Project-Team"),
+                    getTagSet("colleagues"))
         };
     }
 

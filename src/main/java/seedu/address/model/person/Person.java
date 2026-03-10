@@ -21,31 +21,89 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
+    private final MatricNumber matricNumber;
 
     // Data fields
-    private final MatricNumber matricNumber;
     private final Set<Tag> tags = new HashSet<>();
     private final Set<ClassSpaceName> classSpaces = new HashSet<>();
 
+    // Session fields (to be refactored into Session class)
+    private final Attendance attendance;
+    private final Participation participation;
+
     /**
-     * Every field must be present and not null.
+     * Used for AddCommand. Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, MatricNumber matricNumber, Set<Tag> tags) {
-        this(name, phone, email, matricNumber, tags, Collections.emptySet());
+        this(name, phone, email, matricNumber, tags,
+                Collections.emptySet(), new Attendance("UNSET"), new Participation(0)
+        );
     }
 
     /**
-     * Every field must be present and not null.
+     * Used for AddCommand. Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, MatricNumber matricNumber, Set<Tag> tags,
-                  Set<ClassSpaceName> classSpaces) {
-        requireAllNonNull(name, phone, email, matricNumber, tags, classSpaces);
+    public Person(Name name, Phone phone, Email email, MatricNumber matricNumber, Set<ClassSpaceName> classSpaces,
+                  Set<Tag> tags) {
+        this(name, phone, email, matricNumber, tags, classSpaces,
+                new Attendance("UNSET"), new Participation(0)
+        );
+    }
+
+    /**
+     * Used for EditCommand. Every field must be present and not null.
+     */
+    public Person(Person person, Name name, Phone phone, Email email, MatricNumber matricNumber, Set<Tag> tags) {
+        this(name, phone, email, matricNumber, tags,
+                person.classSpaces, person.attendance, person.participation);
+    }
+
+    /**
+     * Used for Attendance commands. Every field must be present and not null.
+     */
+    public Person(Person person, Attendance attendance) {
+        this(person.name, person.phone, person.email, person.matricNumber, person.tags, person.classSpaces,
+                attendance,
+                person.participation);
+    }
+
+    /**
+     * Used for Participation commands. Every field must be present and not null.
+     */
+    public Person(Person person, Participation participation) {
+        this(person.name, person.phone, person.email, person.matricNumber, person.tags, person.classSpaces,
+                person.attendance,
+                participation
+        );
+    }
+
+    /**
+     * Used for ClassSpace commands. Every field must be present and not null.
+     */
+    public Person(Person person, Set<ClassSpaceName> classSpaces) {
+        this(person.name, person.phone, person.email, person.matricNumber, person.tags,
+                classSpaces,
+                person.attendance, person.participation
+        );
+    }
+
+    private Person(Name name,
+                   Phone phone,
+                   Email email,
+                   MatricNumber matricNumber,
+                   Set<Tag> tags,
+                   Set<ClassSpaceName> classSpaces,
+                   Attendance attendance,
+                   Participation participation) {
+        requireAllNonNull(name, phone, email, matricNumber, attendance, participation, tags, classSpaces);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.matricNumber = matricNumber;
         this.tags.addAll(tags);
         this.classSpaces.addAll(classSpaces);
+        this.attendance = attendance;
+        this.participation = participation;
     }
 
     public Name getName() {
@@ -62,6 +120,10 @@ public class Person {
 
     public MatricNumber getMatricNumber() {
         return matricNumber;
+    }
+
+    public Attendance getAttendance() {
+        return attendance;
     }
 
     /**
@@ -120,6 +182,7 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && matricNumber.equals(otherPerson.matricNumber)
+                && attendance.equals(otherPerson.attendance)
                 && tags.equals(otherPerson.tags)
                 && classSpaces.equals(otherPerson.classSpaces);
     }

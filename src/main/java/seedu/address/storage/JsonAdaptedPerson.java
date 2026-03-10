@@ -27,7 +27,7 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String matricNumber;
-    private final Integer participation;
+    //private final Integer participation;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final List<String> classSpaces = new ArrayList<>();
 
@@ -37,25 +37,28 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("matricNumber") String matricNumber,
-            @JsonProperty("participation") Integer participation,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags,
-            @JsonProperty("classSpaces") List<String> classSpaces) {
+            //@JsonProperty("participation") Integer participation,
+            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+        //@JsonProperty("classSpaces") List<String> classSpaces)
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.matricNumber = matricNumber;
-        this.participation = participation;
+        //this.participation = participation;
         if (tags != null) {
             this.tags.addAll(tags);
         }
+        /*
         if (classSpaces != null) {
             this.classSpaces.addAll(classSpaces);
         }
+         */
     }
 
     public JsonAdaptedPerson(String name, String phone, String email, String matricNumber,
                              Integer participation, List<JsonAdaptedTag> tags) {
-        this(name, phone, email, matricNumber, participation, tags, null);
+        //this(name, phone, email, matricNumber, participation, tags, null);
+        this(name, phone, email, matricNumber, tags);
     }
 
     /**
@@ -66,7 +69,7 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         matricNumber = source.getMatricNumber().value;
-        participation = source.getParticipation().value;
+        //participation = source.getParticipation().value;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .toList());

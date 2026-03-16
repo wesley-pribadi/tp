@@ -68,17 +68,22 @@ class JsonSerializableAddressBook {
         }
 
         for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
-            Person person = jsonAdaptedPerson.toModelType();
-            if (addressBook.hasPerson(person)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
-            }
-            for (var classSpaceName : person.getClassSpaces()) {
-                ClassSpace classSpace = new ClassSpace(classSpaceName);
-                if (!addressBook.hasClassSpace(classSpace)) {
-                    addressBook.addClassSpace(classSpace);
+            try {
+                Person person = jsonAdaptedPerson.toModelType();
+                if (addressBook.hasPerson(person)) {
+                    System.err.println(MESSAGE_DUPLICATE_PERSON); //TODO: change error message
+                    continue;
                 }
+                for (var classSpaceName : person.getClassSpaces()) {
+                    ClassSpace classSpace = new ClassSpace(classSpaceName);
+                    if (!addressBook.hasClassSpace(classSpace)) {
+                        addressBook.addClassSpace(classSpace);
+                    }
+                }
+                addressBook.addPerson(person);
+            } catch (IllegalValueException ive) {
+                System.err.println(ive.getMessage()); //TODO: change error message
             }
-            addressBook.addPerson(person);
         }
         return addressBook;
     }

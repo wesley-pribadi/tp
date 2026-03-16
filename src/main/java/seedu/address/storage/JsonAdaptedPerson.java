@@ -130,10 +130,13 @@ class JsonAdaptedPerson {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     MatricNumber.class.getSimpleName()));
         }
-        if (!MatricNumber.isValidMatricNumber(matricNumber)) {
-            throw new IllegalValueException(MatricNumber.MESSAGE_CONSTRAINTS);
+
+        final MatricNumber modelMatricNumber;
+        try {
+            modelMatricNumber = new MatricNumber(matricNumber);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalValueException(e.getMessage());
         }
-        final MatricNumber modelMatricNumber = new MatricNumber(matricNumber);
 
         final Attendance modelAttendance;
         if (attendance == null) {

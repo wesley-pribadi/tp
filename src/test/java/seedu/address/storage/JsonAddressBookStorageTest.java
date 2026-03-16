@@ -54,13 +54,18 @@ public class JsonAddressBookStorageTest {
     }
 
     @Test
-    public void readAddressBook_invalidPersonAddressBook_throwDataLoadingException() {
-        assertThrows(DataLoadingException.class, () -> readAddressBook("invalidPersonAddressBook.json"));
+    public void readAddressBook_invalidPersonAddressBook_returnsEmptyAddressBook() throws Exception {
+        // The file has 1 invalid person, so it skips them and loads an empty address book.
+        AddressBook addressBook = new AddressBook(readAddressBook("invalidPersonAddressBook.json").get());
+        assertEquals(0, addressBook.getPersonList().size());
     }
 
     @Test
-    public void readAddressBook_invalidAndValidPersonAddressBook_throwDataLoadingException() {
-        assertThrows(DataLoadingException.class, () -> readAddressBook("invalidAndValidPersonAddressBook.json"));
+    public void readAddressBook_invalidAndValidPersonAddressBook_returnsOnlyValidPerson() throws Exception {
+        // The file has 1 valid person and 1 invalid person.
+        // It skips the invalid one and successfully loads the 1 valid person.
+        AddressBook addressBook = new AddressBook(readAddressBook("invalidAndValidPersonAddressBook.json").get());
+        assertEquals(1, addressBook.getPersonList().size());
     }
 
     @Test
@@ -95,7 +100,7 @@ public class JsonAddressBookStorageTest {
         original.addClassSpace(new ClassSpace(new ClassSpaceName("CS2103T-T01")));
         original.addPerson(new PersonBuilder()
                 .withName("Session Student")
-                .withMatricNumber("A1234567B")
+                .withMatricNumber("A1234567X")
                 .withPhone("91234567")
                 .withEmail("session@example.com")
                 .withClassSpaces("CS2103T-T01")

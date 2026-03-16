@@ -1,7 +1,6 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.util.logging.Logger;
 
@@ -9,11 +8,9 @@ import seedu.address.commons.core.LogsCenter;
 
 /**
  * Represents a Person's matriculation number in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidFormat(String)}
+ * Guarantees: immutable; is valid as declared in {@link #hasValidFormat(String)}
  */
 public class MatricNumber {
-
-    public static final int CHECKSUM_POSITION = 8;
 
     public static final String MESSAGE_CONSTRAINTS = "Matriculation numbers should start with `A`,"
             + " followed by 7 digits and end with a valid checksum letter.";
@@ -25,9 +22,13 @@ public class MatricNumber {
      * The first character of the matriculation number must be the alphabet 'A'.
      */
     public static final String VALIDATION_REGEX = "^[aA]\\d{7}[a-zA-Z]$";
-
+    private static final int EXPECTED_LENGTH = 9;
+    private static final int CHECKSUM_POSITION = 8;
+    private static final int DIGITS_START_INDEX = 2;
+    private static final int DIGITS_END_INDEX = 8;
+    private static final String CHECKSUM_LETTERS = "BAEHJLMNRUWXY";
+    private static final int[] WEIGHTS = {-1, -1, -1, -1, -1, -1};
     private static final Logger logger = LogsCenter.getLogger(MatricNumber.class);
-
     public final String value;
 
     /**
@@ -49,7 +50,7 @@ public class MatricNumber {
      * @param matricNumber Matriculation number to be tested.
      * @return True if matriculation number is valid.
      */
-    public static boolean isValidFormat(String matricNumber) {
+    public static boolean hasValidFormat(String matricNumber) {
         return matricNumber.matches(VALIDATION_REGEX);
     }
 
@@ -59,19 +60,31 @@ public class MatricNumber {
      * @param matricNumber Matriculation number to be tested.
      * @return True if matriculation number is valid.
      */
-    public static boolean isValidMatricNumber(String matricNumber) {
-        return matricNumber != null && isValidFormat(matricNumber) && hasCorrectChecksum(matricNumber);
+    public static boolean hasValidMatricNumber(String matricNumber) {
+        return hasNonNullMatricNumber(matricNumber) && hasValidFormat(matricNumber) && hasCorrectChecksum(matricNumber);
+    }
+
+    private static boolean hasNonNullMatricNumber(String matricNumber) {
+        return matricNumber != null;
     }
 
     private static boolean hasCorrectChecksum(String matricNumber) {
-        return isChecksumValid(matricNumber);
+        // Method should only be called after it has passed format validation and null checks.
+        assert hasValidLength(matricNumber)
+                : "Matriculation number length should be correct before checksum validation.";
+        return hasValidChecksum(matricNumber);
     }
 
-    private static boolean isChecksumValid(String matricNumber) {
+    private static boolean hasValidLength(String matricNumber) {
+        return matricNumber.length() == EXPECTED_LENGTH;
+    }
+
+    private static boolean hasValidChecksum(String matricNumber) {
         return calculateChecksum(matricNumber) == extractProvidedChecksum(matricNumber);
     }
 
     private static char extractProvidedChecksum(String matricNumber) {
+        assert hasValidLength(matricNumber) : "Matriculation number length should be 9";
         return matricNumber.charAt(CHECKSUM_POSITION);
     }
 
@@ -80,7 +93,7 @@ public class MatricNumber {
     }
 
     private static void validateMatricNumber(String matricNumber) {
-        if (!isValidFormat(matricNumber)) {
+        if (!hasValidFormat(matricNumber)) {
             logFormatError(matricNumber);
             throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
         }
@@ -96,14 +109,14 @@ public class MatricNumber {
      * @return Checksum character for matriculation number.
      */
     private static char calculateChecksum(String matricNumber) {
-        String checksumLetters = "BAEHJLMNRUWXY";
-        int length = checksumLetters.length();
-        int[] weights = {-1, -1, -1, -1, -1, -1};
-        String digits = matricNumber.substring(2, 8);
+        assert hasValidLength(matricNumber) : "Matriculation number length should be 9";
+        assert hasCorrectFirstCharacter(matricNumber) : "First character must be an 'A'";
+        String digits = matricNumber.substring(DIGITS_START_INDEX, DIGITS_END_INDEX);
+        int length = CHECKSUM_LETTERS.length();
         int sum = 0;
 
         for (int i = 0; i < digits.length(); i++) {
-            sum += Character.getNumericValue(digits.charAt(i)) * weights[i];
+            sum += Character.getNumericValue(digits.charAt(i)) * WEIGHTS[i];
         }
 
         int remainder = (sum - 1) % length;
@@ -111,7 +124,11 @@ public class MatricNumber {
             remainder += length;
         }
 
-        return checksumLetters.charAt(remainder);
+        return CHECKSUM_LETTERS.charAt(remainder);
+    }
+
+    private static boolean hasCorrectFirstCharacter(String matricNumber) {
+        return Character.toUpperCase(matricNumber.charAt(0)) == 'A';
     }
 
     private void logCreationSuccess() {

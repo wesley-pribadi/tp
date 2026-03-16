@@ -35,34 +35,34 @@ public class MatricNumberTest {
     }
 
     @Test
-    public void isValidMatricNumber() {
+    public void hasValidMatricNumber() {
         // null matriculation number
-        assertThrows(NullPointerException.class, () -> MatricNumber.isValidFormat(null));
+        assertThrows(NullPointerException.class, () -> MatricNumber.hasValidFormat(null));
 
         // invalid matriculation numbers
-        assertFalse(MatricNumber.isValidFormat("")); // empty string
-        assertFalse(MatricNumber.isValidFormat(" ")); // spaces only
-        assertFalse(MatricNumber.isValidFormat("B1234567M")); //starts with `B`
-        assertFalse(MatricNumber.isValidFormat("1234567")); //only numbers
-        assertFalse(MatricNumber.isValidFormat("A12345678M")); //has 8 digits
-        assertFalse(MatricNumber.isValidFormat("A123456Z")); //has 6 digits
-        assertFalse(MatricNumber.isValidFormat("A0N")); // 1 digit
-        assertFalse(MatricNumber.isValidFormat("AZ")); //no digits
-        assertFalse(MatricNumber.isValidFormat("A1234567N ")); // trailing space
-        assertFalse(MatricNumber.isValidFormat(" A1234567N")); // leading space
-        assertFalse(MatricNumber.isValidFormat("A1234 567N")); // space in the middle
+        assertFalse(MatricNumber.hasValidFormat("")); // empty string
+        assertFalse(MatricNumber.hasValidFormat(" ")); // spaces only
+        assertFalse(MatricNumber.hasValidFormat("B1234567M")); //starts with `B`
+        assertFalse(MatricNumber.hasValidFormat("1234567")); //only numbers
+        assertFalse(MatricNumber.hasValidFormat("A12345678M")); //has 8 digits
+        assertFalse(MatricNumber.hasValidFormat("A123456Z")); //has 6 digits
+        assertFalse(MatricNumber.hasValidFormat("A0N")); // 1 digit
+        assertFalse(MatricNumber.hasValidFormat("AZ")); //no digits
+        assertFalse(MatricNumber.hasValidFormat("A1234567N ")); // trailing space
+        assertFalse(MatricNumber.hasValidFormat(" A1234567N")); // leading space
+        assertFalse(MatricNumber.hasValidFormat("A1234 567N")); // space in the middle
 
         // wrong checksums
-        assertFalse(MatricNumber.isValidMatricNumber("A1111111A")); // wrong checksum, should be 'M'
-        assertFalse(MatricNumber.isValidMatricNumber("A0388420K")); // wrong checksum, should be 'B'
-        assertFalse(MatricNumber.isValidMatricNumber("A2222222A")); // wrong checksum, should be 'B'
+        assertFalse(MatricNumber.hasValidMatricNumber("A1111111A")); // wrong checksum, should be 'M'
+        assertFalse(MatricNumber.hasValidMatricNumber("A0388420K")); // wrong checksum, should be 'B'
+        assertFalse(MatricNumber.hasValidMatricNumber("A2222222A")); // wrong checksum, should be 'B'
 
         // valid matriculation numbers
-        assertTrue(MatricNumber.isValidFormat("A4433221B"));
-        assertTrue(MatricNumber.isValidFormat("A0000000A")); // all same digits
-        assertTrue(MatricNumber.isValidFormat("a4455667L")); // starts with lower capital `a`
-        assertTrue(MatricNumber.isValidFormat("A4455667L")); // ends with lower capital
-        assertTrue(MatricNumber.isValidFormat("a4455667l")); // characters are both in lower capital
+        assertTrue(MatricNumber.hasValidFormat("A4433221B"));
+        assertTrue(MatricNumber.hasValidFormat("A0000000A")); // all same digits
+        assertTrue(MatricNumber.hasValidFormat("a4455667L")); // starts with lower capital `a`
+        assertTrue(MatricNumber.hasValidFormat("A4455667L")); // ends with lower capital
+        assertTrue(MatricNumber.hasValidFormat("a4455667l")); // characters are both in lower capital
     }
 
     @Test

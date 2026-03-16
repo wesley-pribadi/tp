@@ -117,8 +117,10 @@ public class SessionListTest {
 
     @Test
     public void hashCode_test() {
+        assertEquals(singleTestSessionList1.hashCode(), singleTestSessionList1.hashCode());
         assertEquals(singleTestSessionList1, singleTestSessionList1);
         assertEquals(singleTestSessionList2, singleTestSessionList2);
         assertNotEquals(singleTestSessionList1, singleTestSessionList2);
+        assertNotEquals(singleTestSessionList1.hashCode(), singleTestSessionList2.hashCode());
     }
 }

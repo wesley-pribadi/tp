@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 public class SessionTest {
 
     private final LocalDate testDate = LocalDate.of(2026, 3, 16);
+    private final String testDateString = "2026-03-16";
 
     private final Attendance presentAttendance = new Attendance(Attendance.Status.PRESENT);
     private final Participation zeroParticipation = new Participation(ZERO_PARTICIPATION);
@@ -30,10 +31,50 @@ public class SessionTest {
     }
 
     @Test
+    public void constructor_validDateString_success() {
+        Session session = new Session(testDateString, presentAttendance, zeroParticipation);
+        assertEquals(testDate, session.getDate());
+    }
+
+    @Test
+    public void constructor_nullDate_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new Session((LocalDate) null,
+                presentAttendance, zeroParticipation));
+    }
+
+    @Test
+    public void constructor_emptyDate_throwsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> new Session("",
+                presentAttendance, zeroParticipation));
+    }
+    @Test
     public void constructor_invalidDateString_throwsIllegalArgumentException() {
         String invalidDateString = "16-03-2026";
         assertThrows(IllegalArgumentException.class, () ->
                 new Session(invalidDateString, presentAttendance, zeroParticipation));
+    }
+    @Test
+    public void constructor_validAttendance_success() {
+        Session session = new Session(testDate.toString(),
+                new Attendance(Attendance.Status.PRESENT), zeroParticipation);
+        assertEquals(Attendance.Status.PRESENT, session.getAttendance().value);
+    }
+
+    @Test
+    public void constructor_validParticipation_success() {
+        Session session = new Session(testDate.toString(),
+                presentAttendance, new Participation(THREE_PARTICIPATION));
+        assertEquals(THREE_PARTICIPATION, session.getParticipation().value);
+    }
+
+    @Test
+    public void constructor_nullAttendance_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new Session(testDate.toString(), null, zeroParticipation));
+    }
+
+    @Test
+    public void constructor_nullParticipation_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new Session(testDate.toString(), presentAttendance, null));
     }
 
     @Test
@@ -43,6 +84,7 @@ public class SessionTest {
         assertEquals(presentAttendance, session.getAttendance());
         assertEquals(fullParticipation, session.getParticipation());
     }
+
 
     @Test
     public void equals() {

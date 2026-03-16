@@ -75,6 +75,25 @@ public class MatricNumberTest {
     }
 
     @Test
+    public void hasValidMatricNumber_null_returnsFalse() {
+        assertFalse(MatricNumber.hasValidMatricNumber(null));
+    }
+
+    @Test
+    public void calculateChecksum_sumIsZero_triggersNegativeRemainderBlock() {
+        assertTrue(MatricNumber.hasValidMatricNumber("A0000000Y"));
+    }
+
+    @Test
+    public void validateMatricNumber_triggersLoggingMethods() {
+        // Triggers logFormatError.
+        assertThrows(IllegalArgumentException.class, () -> new MatricNumber("B1234567A"));
+
+        // Triggers logChecksumError.
+        assertThrows(IllegalArgumentException.class, () -> new MatricNumber("A1111111A"));
+    }
+
+    @Test
     public void equals() {
         MatricNumber matricNumber = new MatricNumber(VALID_MATRIC_NUMBER_1);
 

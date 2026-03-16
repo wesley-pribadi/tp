@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Represents a list of sessions, typically belonging to a class space.
+ * Represents a list of sessions, belonging to a class space.
  * Allows iterating through sessions to retrieve attendance and participation.
  */
 public class SessionList implements Iterable<Session> {

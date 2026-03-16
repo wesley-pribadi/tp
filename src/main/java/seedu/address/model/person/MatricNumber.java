@@ -76,7 +76,7 @@ public class MatricNumber {
     }
 
     private static char extractProvidedChecksum(String matricNumber) {
-        return matricNumber.charAt(CHECKSUM_POSITION);
+        return Character.toUpperCase(matricNumber.charAt(CHECKSUM_POSITION));
     }
 
     private static String getChecksumErrorMessage(String matricNumber) {

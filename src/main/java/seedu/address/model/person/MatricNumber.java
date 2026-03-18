@@ -61,7 +61,7 @@ public class MatricNumber {
      * @return True if matriculation number is valid.
      */
     public static boolean hasValidMatricNumber(String matricNumber) {
-        return hasNonNullMatricNumber(matricNumber) && hasValidFormat(matricNumber) && hasCorrectChecksum(matricNumber);
+        return hasNonNullMatricNumber(matricNumber) && hasValidFormat(matricNumber) && hasValidChecksum(matricNumber);
     }
 
     private static boolean hasNonNullMatricNumber(String matricNumber) {
@@ -85,7 +85,7 @@ public class MatricNumber {
             logFormatError(matricNumber);
             throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
         }
-        if (!hasCorrectChecksum(matricNumber)) {
+        if (!hasValidChecksum(matricNumber)) {
             logChecksumError(matricNumber);
             throw new IllegalArgumentException(getChecksumErrorMessage(matricNumber));
         }

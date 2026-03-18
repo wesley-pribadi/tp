@@ -174,7 +174,7 @@ public class AttViewCommandTest {
     }
 
     @Test
-    public void execute_noFilter_missingSession_persistsDefaultSession() {
+    public void executeNoFilter_missingSession_persistsDefaultSession() {
         Model model = new ModelManager();
         model.addClassSpace(new ClassSpace(T01));
         model.switchToClassSpaceView(T01);
@@ -188,7 +188,8 @@ public class AttViewCommandTest {
         expectedModel.setAttendanceViewActive(true);
         expectedModel.updateFilteredPersonList(seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS);
 
-        var expectedOriginalPerson = expectedModel.findPersonByMatricNumber(new MatricNumber(matricNumber)).orElseThrow();
+        var expectedOriginalPerson = expectedModel.findPersonByMatricNumber(new MatricNumber(matricNumber))
+                .orElseThrow();
         var expectedUpdatedPerson = expectedOriginalPerson.withUpdatedSession(
                 T01,
                 new seedu.address.model.person.Session(SESSION_DATE,

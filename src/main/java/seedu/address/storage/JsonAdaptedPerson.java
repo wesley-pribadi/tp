@@ -65,7 +65,9 @@ class JsonAdaptedPerson {
         }
         if (classSpaceSessions != null) {
             classSpaceSessions.forEach((classSpaceName, sessions) -> {
-                List<JsonAdaptedSession> adaptedSessions = sessions == null ? new ArrayList<>() : new ArrayList<>(sessions);
+                List<JsonAdaptedSession> adaptedSessions = sessions == null
+                        ? new ArrayList<>()
+                        : new ArrayList<>(sessions);
                 this.classSpaceSessions.put(classSpaceName, adaptedSessions);
             });
         }

@@ -3,13 +3,47 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
+
 /**
  * Represents a Person's email in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
  */
 public class Email {
 
+    public static final String MULTIPLE_AT_SYMBOL_MESSAGE = "Email contains more than one '@'. "
+            + "There should only be one.";
+    public static final String MESSAGE_MISSING_LOCAL_PART = "Email is missing a local-part before '@'. "
+            + "It should be in the format local-part@domain.";
+    public static final String MESSAGE_LOCAL_PART_INVALID_START = "The local-part (before '@') must start with an "
+            + "alphanumeric character, not '%s'.";
+    public static final String MESSAGE_LOCAL_PART_INVALID_END = "The local-part (before '@') must not end with a "
+            + "special character like '%s'.";
+    public static final String MESSAGE_DOMAIN_CONSECUTIVE_PERIODS = "The domain contains consecutive '.' separators, "
+            + "which is not allowed.";
+    public static final String MESSAGE_DOMAIN_LABEL_INVALID = "The domain label '%s' is invalid. "
+            + "Each label must start and end with "
+            + "an alphanumeric character and may only contain hyphens in between.";
+    private static final char AT_SYMBOL = '@';
+    private static final int MIN_DOMAIN_LAST_PART_LENGTH = 2;
     private static final String SPECIAL_CHARACTERS = "+_.-";
+
+    private static final String EMAIL_FORMAT_EXAMPLE = "(e.g. johndoe@example.com)";
+    private static final String EMAIL_FORMAT_HINT = "It should be in the format local-part@domain "
+            + EMAIL_FORMAT_EXAMPLE;
+    // Error messages
+    public static final String EMPTY_EMAIL_MESSAGE = "Email cannot be empty. " + EMAIL_FORMAT_HINT;
+    public static final String MESSAGE_MISSING_DOMAIN = "Email is missing a domain after '@'. " + EMAIL_FORMAT_HINT;
+
+    public static final String MISSING_AT_SYMBOL_MESSAGE = "Email is missing '@'. " + EMAIL_FORMAT_HINT;
+    public static final String MESSAGE_LOCAL_PART_INVALID_CHARS = "The local-part (before '@') contains invalid "
+            + "characters. Only alphanumeric characters and "
+            + SPECIAL_CHARACTERS + " are allowed, and special characters cannot be consecutive.";
+    public static final String MESSAGE_DOMAIN_TLD_SHORT = "The domain's last part "
+            + "(e.g. 'com' in 'example.com') must be at least "
+            + MIN_DOMAIN_LAST_PART_LENGTH + " characters long.";
     public static final String MESSAGE_CONSTRAINTS = "Emails should be of the format local-part@domain "
             + "and adhere to the following constraints:\n"
             + "1. The local-part should only contain alphanumeric characters and these special characters, excluding "
@@ -21,6 +55,8 @@ public class Email {
             + "    - end with a domain label at least 2 characters long\n"
             + "    - have each domain label start and end with alphanumeric characters\n"
             + "    - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.";
+
+
     // alphanumeric and special characters
     private static final String ALPHANUMERIC_NO_UNDERSCORE = "[^\\W_]+"; // alphanumeric characters except underscore
     private static final String LOCAL_PART_REGEX = "^" + ALPHANUMERIC_NO_UNDERSCORE + "([" + SPECIAL_CHARACTERS + "]"
@@ -29,10 +65,11 @@ public class Email {
             + "(-" + ALPHANUMERIC_NO_UNDERSCORE + ")*";
     private static final String DOMAIN_LAST_PART_REGEX = "(" + DOMAIN_PART_REGEX + "){2,}$"; // At least two chars
     private static final String DOMAIN_REGEX = "(" + DOMAIN_PART_REGEX + "\\.)*" + DOMAIN_LAST_PART_REGEX;
+
     public static final String VALIDATION_REGEX = LOCAL_PART_REGEX + "@" + DOMAIN_REGEX;
 
+    private static final Logger logger = LogsCenter.getLogger(Email.class);
     public final String value;
-
     /**
      * Constructs an {@code Email}.
      *
@@ -40,8 +77,9 @@ public class Email {
      */
     public Email(String email) {
         requireNonNull(email);
-        checkArgument(isValidEmail(email), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidEmail(email), getDiagnosticMessage(email));
         value = email;
+        logger.fine("Created Email: " + value);
     }
 
     /**
@@ -59,7 +97,10 @@ public class Email {
      * @return Error message if email is invalid.
      */
     public static String getDiagnosticMessage(String email) {
-        String atSymbolError = checkAtSymbol(email);
+        assert email != null : "getDiagnosticMessage should not be called with null";
+        logger.fine("Diagnosing invalid email: '" + email + "'");
+
+        String atSymbolError = checkAtSymbolErrors(email);
         if (atSymbolError != null) {
             return atSymbolError;
         }
@@ -80,57 +121,75 @@ public class Email {
         return MESSAGE_CONSTRAINTS;
     }
 
-    private static String checkAtSymbol(String email) {
-        if (!email.contains("@")) {
-            return "Email is missing '@'. It should be in the format local-part@domain (e.g. johndoe@example.com).";
+    private static boolean isEmailEmpty(String email) {
+        return email.isEmpty();
+    }
+
+    private static boolean isMissingAtSymbol(String email) {
+        return email.indexOf(AT_SYMBOL) == -1;
+    }
+
+    private static boolean hasMultipleAtSymbols(String email) {
+        return email.chars().filter(c -> c == AT_SYMBOL).count() > 1;
+    }
+
+    private static String checkAtSymbolErrors(String email) {
+        if (isEmailEmpty(email)) {
+            return EMPTY_EMAIL_MESSAGE;
         }
-        if (email.chars().filter(c -> c == '@').count() > 1) {
-            return "Email contains more than one '@'. Only one '@' is allowed.";
+        if (isMissingAtSymbol(email)) {
+            return MISSING_AT_SYMBOL_MESSAGE;
+        }
+        if (hasMultipleAtSymbols(email)) {
+            return MULTIPLE_AT_SYMBOL_MESSAGE;
         }
         return null;
     }
 
     private static String extractLocalPart(String email) {
-        return email.substring(0, email.indexOf('@'));
+        assert email.indexOf(AT_SYMBOL) != -1 : "extractLocalPart called before @ presence was confirmed";
+        return email.substring(0, email.indexOf(AT_SYMBOL));
     }
 
     private static String extractDomain(String email) {
-        return email.substring(email.indexOf('@') + 1);
+        assert email.indexOf(AT_SYMBOL) != -1 : "extractDomain called before @ presence was confirmed";
+        return email.substring(email.indexOf(AT_SYMBOL) + 1);
     }
 
     private static String checkLocalPart(String localPart) {
         if (localPart.isEmpty()) {
-            return "Email is missing a local-part before '@'. It should be in the format local-part@domain.";
+            return MESSAGE_MISSING_LOCAL_PART;
         }
-        if (!localPart.matches("^" + ALPHANUMERIC_NO_UNDERSCORE + ".*")) {
-            return "The local-part (before '@') must start with an alphanumeric character, not '"
-                    + localPart.charAt(0) + "'.";
+        if (!startsWithAlphanumeric(localPart)) {
+            return String.format(MESSAGE_LOCAL_PART_INVALID_START, localPart.charAt(0));
         }
-        if (SPECIAL_CHARACTERS.contains(String.valueOf(localPart.charAt(localPart.length() - 1)))) {
-            return "The local-part (before '@') must not end with a special character like '"
-                    + localPart.charAt(localPart.length() - 1) + "'.";
+        if (endsWithSpecialCharacter(localPart)) {
+            return String.format(MESSAGE_LOCAL_PART_INVALID_END, localPart.charAt(localPart.length() - 1));
         }
         if (!localPart.matches(LOCAL_PART_REGEX)) {
-            return "The local-part (before '@') contains invalid characters. Only alphanumeric characters and "
-                    + SPECIAL_CHARACTERS + " are allowed, and special characters cannot be consecutive.";
+            return MESSAGE_LOCAL_PART_INVALID_CHARS;
         }
         return null;
     }
 
+    private static boolean startsWithAlphanumeric(String localPart) {
+        return String.valueOf(localPart.charAt(0)).matches(ALPHANUMERIC_NO_UNDERSCORE);
+    }
+    private static boolean endsWithSpecialCharacter(String localPart) {
+        return SPECIAL_CHARACTERS.contains(String.valueOf(localPart.charAt(localPart.length() - 1)));
+    }
+
     private static String checkDomain(String domain) {
         if (domain.isEmpty()) {
-            return "Email is missing a domain after '@'."
-                    + "It should be in the format local-part@domain (e.g. johndoe@example.com).";
+            return MESSAGE_MISSING_DOMAIN;
         }
-        if (!domain.contains(".")) {
-            return "The domain (after '@') is missing a '.' (e.g. it should look like 'example.com').";
-        }
-        return checkDomainLabels(domain.split("\\."));
+        return checkDomainLabels(domain.split("\\.", -1));
     }
 
     private static String checkDomainLabels(String[] labels) {
-        if (labels[labels.length - 1].length() < 2) {
-            return "The domain's last part (e.g. 'com' in 'example.com') must be at least 2 characters long.";
+        assert labels.length > 0 : "checkDomainLabels should not be called with empty labels array";
+        if (isTldShort(labels)) {
+            return MESSAGE_DOMAIN_TLD_SHORT;
         }
         for (String label : labels) {
             String err = checkSingleDomainLabel(label);
@@ -141,13 +200,16 @@ public class Email {
         return null;
     }
 
+    private static boolean isTldShort(String[] labels) {
+        return labels[labels.length - 1].length() < MIN_DOMAIN_LAST_PART_LENGTH;
+    }
+
     private static String checkSingleDomainLabel(String label) {
         if (label.isEmpty()) {
-            return "The domain contains consecutive '.' separators, which is not allowed.";
+            return MESSAGE_DOMAIN_CONSECUTIVE_PERIODS;
         }
         if (!label.matches(DOMAIN_PART_REGEX)) {
-            return "The domain label '" + label + "' is invalid. Each label must start and end with "
-                    + "an alphanumeric character and may only contain hyphens in between.";
+            return String.format(MESSAGE_DOMAIN_LABEL_INVALID, label);
         }
         return null;
     }

@@ -1,7 +1,7 @@
 package seedu.address.model.person;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
@@ -17,7 +17,51 @@ public class EmailTest {
     @Test
     public void constructor_invalidEmail_throwsIllegalArgumentException() {
         String invalidEmail = "";
-        assertThrows(IllegalArgumentException.class, () -> new Email(invalidEmail));
+        assertThrows(IllegalArgumentException.class, Email.EMPTY_EMAIL_MESSAGE, () -> new Email(invalidEmail));
+    }
+
+    @Test
+    public void getDiagnosticMessage_invalidEmails_returnsSpecificErrorMessage() {
+        // Missing '@' symbol
+        assertEquals(Email.MISSING_AT_SYMBOL_MESSAGE, Email.getDiagnosticMessage("peterjackexample.com"));
+
+        // Multiple '@' symbols
+        assertEquals(Email.MULTIPLE_AT_SYMBOL_MESSAGE, Email.getDiagnosticMessage("peter@jack@example.com"));
+
+        // Missing local part
+        assertEquals(Email.MESSAGE_MISSING_LOCAL_PART, Email.getDiagnosticMessage("@example.com"));
+
+        // Local part starts with invalid character
+        assertEquals(String.format(Email.MESSAGE_LOCAL_PART_INVALID_START, "-"),
+                Email.getDiagnosticMessage("-peterjack@example.com"));
+        assertEquals(String.format(Email.MESSAGE_LOCAL_PART_INVALID_START, " "),
+                Email.getDiagnosticMessage(" peterjack@example.com"));
+
+        // Local part ends with invalid character
+        assertEquals(String.format(Email.MESSAGE_LOCAL_PART_INVALID_END, "-"),
+                Email.getDiagnosticMessage("peterjack-@example.com"));
+
+        // Local part contains invalid characters (space, consecutive special characters, disallowed symbols)
+        assertEquals(Email.MESSAGE_LOCAL_PART_INVALID_CHARS, Email.getDiagnosticMessage("peter jack@example.com"));
+        assertEquals(Email.MESSAGE_LOCAL_PART_INVALID_CHARS, Email.getDiagnosticMessage("peter..jack@example.com"));
+        assertEquals(Email.MESSAGE_LOCAL_PART_INVALID_CHARS, Email.getDiagnosticMessage("peter!jack@example.com"));
+
+        // Missing domain
+        assertEquals(Email.MESSAGE_MISSING_DOMAIN, Email.getDiagnosticMessage("peterjack@"));
+
+        // Domain TLD too short
+        assertEquals(Email.MESSAGE_DOMAIN_TLD_SHORT, Email.getDiagnosticMessage("peterjack@example.c"));
+
+        // Domain contains consecutive periods
+        assertEquals(Email.MESSAGE_DOMAIN_CONSECUTIVE_PERIODS, Email.getDiagnosticMessage("peterjack@example..com"));
+
+        // Domain label invalid (starts/ends with hyphen, contains invalid symbols)
+        assertEquals(String.format(Email.MESSAGE_DOMAIN_LABEL_INVALID, "-example"),
+                Email.getDiagnosticMessage("peterjack@-example.com"));
+        assertEquals(String.format(Email.MESSAGE_DOMAIN_LABEL_INVALID, "example-"),
+                Email.getDiagnosticMessage("peterjack@example-.com"));
+        assertEquals(String.format(Email.MESSAGE_DOMAIN_LABEL_INVALID, "exam_ple"),
+                Email.getDiagnosticMessage("peterjack@exam_ple.com"));
     }
 
     @Test
@@ -85,43 +129,5 @@ public class EmailTest {
 
         // different values -> returns false
         assertFalse(email.equals(new Email("other.valid@email")));
-    }
-
-    @Test
-    public void getDiagnosticMessage_specificIssues_returnsHelpfulMessage() {
-        // missing '@'.
-        String msgNoAt = Email.getDiagnosticMessage("peterjackexample.com");
-        assertTrue(msgNoAt.contains("@"));
-
-        // multiple '@'.
-        String msgMultiAt = Email.getDiagnosticMessage("peter@@example.com");
-        assertTrue(msgMultiAt.contains("more than one"));
-
-        // missing local part.
-        String msgNoLocal = Email.getDiagnosticMessage("@example.com");
-        assertTrue(msgNoLocal.contains("local-part"));
-        // missing domain.
-        String msgNoDomain = Email.getDiagnosticMessage("peterjack@");
-        assertTrue(msgNoDomain.contains("domain"));
-
-        // domain missing '.'
-        String msgNoDot = Email.getDiagnosticMessage("peterjack@examplecom");
-        assertTrue(msgNoDot.contains("."));
-
-        // TLD too short.
-        String msgShortTld = Email.getDiagnosticMessage("peterjack@example.c");
-        assertTrue(msgShortTld.contains("2 characters"));
-
-        // local part starts with special character.
-        String msgBadStart = Email.getDiagnosticMessage("-peterjack@example.com");
-        assertTrue(msgBadStart.contains("start"));
-
-        // local part ends with special character.
-        String msgBadEnd = Email.getDiagnosticMessage("peterjack-@example.com");
-        assertTrue(msgBadEnd.contains("end"));
-
-        // each case produces a distinct, specific message.
-        assertNotEquals(msgNoAt, msgMultiAt);
-        assertNotEquals(msgNoLocal, msgNoDomain);
     }
 }

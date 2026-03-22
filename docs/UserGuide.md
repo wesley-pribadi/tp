@@ -1,6 +1,7 @@
 ---
-layout: page
-title: User Guide
+  layout: default.md
+    title: "User Guide"
+    pageNav: 3
 ---
 
 # TAA User Guide

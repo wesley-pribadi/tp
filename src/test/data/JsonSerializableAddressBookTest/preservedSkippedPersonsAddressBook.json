@@ -7,11 +7,11 @@
     "attendance" : "UNINITIALISED",
     "participation" : 0,
     "tags" : [ "family" ],
-    "classSpaces" : [ ],
-    "classSpaceSessions" : { },
+    "groups" : [ ],
+    "groupSessions" : { },
     "assignmentGrades" : { }
   } ],
-  "classSpaces" : [ ],
+  "groups" : [ ],
   "preservedSkippedPersons" : [ {
     "name" : "Alex Yeoh",
     "phone" : "87438807",
@@ -20,14 +20,14 @@
     "attendance" : "UNINITIALISED",
     "participation" : 0,
     "tags" : [ "friends" ],
-    "classSpaces" : [ "T01" ],
-    "classSpaceSessions" : { },
+    "groups" : [ "T01" ],
+    "groupSessions" : { },
     "assignmentGrades" : {
       "T01" : {
         "FakeAssignment" : 50
       }
     }
   } ],
-  "preservedSkippedClassSpaces" : [ ],
-  "loadWarnings" : [ "Skipped invalid contact 'Alex Yeoh':\n- Person has a grade for assignment 'FakeAssignment' in class space 'T01',but that assignment does not exist." ]
+  "preservedSkippedGroups" : [ ],
+  "loadWarnings" : [ "Skipped invalid contact 'Alex Yeoh':\n- Person has a grade for assignment 'FakeAssignment' in group 'T01',but that assignment does not exist." ]
 }

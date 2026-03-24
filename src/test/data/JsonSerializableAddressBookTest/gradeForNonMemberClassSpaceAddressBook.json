@@ -7,15 +7,15 @@
     "attendance": "UNINITIALISED",
     "participation": 0,
     "tags": [],
-    "classSpaces": [],
-    "classSpaceSessions": {},
+    "groups": [],
+    "groupSessions": {},
     "assignmentGrades": {
       "T01": {
         "Quiz 1": 50
       }
     }
   } ],
-  "classSpaces": [ {
+  "groups": [ {
     "name": "T01",
     "assignments": [ {
       "name": "Quiz 1",
@@ -24,4 +24,3 @@
     } ]
   } ]
 }
-

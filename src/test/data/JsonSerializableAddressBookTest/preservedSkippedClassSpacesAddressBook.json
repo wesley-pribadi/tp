@@ -1,13 +1,13 @@
 {
   "persons" : [ ],
-  "classSpaces" : [ {
+  "groups" : [ {
     "name" : "T01",
     "assignments" : [ ]
   } ],
   "preservedSkippedPersons" : [ ],
-  "preservedSkippedClassSpaces" : [ {
+  "preservedSkippedGroups" : [ {
     "name" : "T01!!!",
     "assignments" : [ ]
   } ],
-  "loadWarnings" : [ "Skipped invalid class space 'T01!!!':\n- Class space names should only contain letters, numbers, spaces, hyphens, and underscores, and it should not be blank." ]
+  "loadWarnings" : [ "Skipped invalid group 'T01!!!':\n- Group names should only contain letters, numbers, spaces, hyphens, and underscores, and it should not be blank." ]
 }

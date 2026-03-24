@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.classspace.Group;
 import seedu.address.model.classspace.ClassSpaceName;
+import seedu.address.model.classspace.Group;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MatricNumber;
 import seedu.address.model.person.Name;

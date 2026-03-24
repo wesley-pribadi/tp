@@ -21,8 +21,8 @@ import seedu.address.commons.exceptions.DataLoadingException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.classspace.Group;
 import seedu.address.model.classspace.ClassSpaceName;
+import seedu.address.model.classspace.Group;
 import seedu.address.model.person.MatricNumber;
 import seedu.address.testutil.PersonBuilder;
 

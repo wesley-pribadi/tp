@@ -7,8 +7,8 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.CreateGroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.classspace.Group;
 import seedu.address.model.classspace.ClassSpaceName;
+import seedu.address.model.classspace.Group;
 
 /**
  * Parses input arguments and creates a new CreateGroupCommand object.

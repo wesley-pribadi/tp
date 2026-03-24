@@ -22,8 +22,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.assignment.Assignment;
 import seedu.address.model.assignment.AssignmentName;
-import seedu.address.model.classspace.Group;
 import seedu.address.model.classspace.ClassSpaceName;
+import seedu.address.model.classspace.Group;
 import seedu.address.model.person.Person;
 
 /**

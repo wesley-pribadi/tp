@@ -14,8 +14,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.assignment.Assignment;
-import seedu.address.model.classspace.Group;
 import seedu.address.model.classspace.ClassSpaceName;
+import seedu.address.model.classspace.Group;
 import seedu.address.model.person.Attendance;
 import seedu.address.model.person.Person;
 

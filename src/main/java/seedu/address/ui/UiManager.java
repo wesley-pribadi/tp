@@ -139,7 +139,7 @@ public class UiManager implements Ui {
      * Returns only the warnings related to groups.
      *
      * @param warnings All warnings collected during loading.
-     * @return Class-space-related warnings.
+     * @return Group-related warnings.
      */
     private List<String> getGroupWarnings(List<String> warnings) {
         return warnings.stream()

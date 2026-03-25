@@ -164,7 +164,7 @@ public class JsonSerializableAddressBookTest {
         // Verify that it is the expected group.
         Group expectedGroup =
                 new Group(
-                        new GroupName("Implicit-Class-Space"));
+                        new GroupName("Implicit-Group"));
 
         assertTrue(addressBookFromFile.hasGroup(expectedGroup));
     }

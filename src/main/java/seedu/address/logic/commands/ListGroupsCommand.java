@@ -7,36 +7,36 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import seedu.address.model.Model;
-import seedu.address.model.classspace.ClassSpace;
+import seedu.address.model.group.Group;
 
 /**
- * Lists all class spaces.
+ * Lists all groups.
  */
 public class ListGroupsCommand extends Command {
 
     public static final String COMMAND_WORD = "listgroups";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all class spaces.";
-    public static final String MESSAGE_NO_GROUPS = "There are no class spaces yet.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all groups.";
+    public static final String MESSAGE_NO_GROUPS = "There are no groups yet.";
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        List<ClassSpace> classSpaces = model.getClassSpaceList().stream()
-                .sorted(Comparator.comparing(classSpace -> classSpace.getClassSpaceName().value,
+        List<Group> groups = model.getGroupList().stream()
+                .sorted(Comparator.comparing(group -> group.getGroupName().value,
                         String.CASE_INSENSITIVE_ORDER))
                 .collect(Collectors.toList());
 
-        if (classSpaces.isEmpty()) {
+        if (groups.isEmpty()) {
             return new CommandResult(MESSAGE_NO_GROUPS);
         }
 
-        StringBuilder builder = new StringBuilder("Class spaces:\n");
-        for (int i = 0; i < classSpaces.size(); i++) {
+        StringBuilder builder = new StringBuilder("Groups:\n");
+        for (int i = 0; i < groups.size(); i++) {
             builder.append(i + 1)
                     .append(". ")
-                    .append(classSpaces.get(i).getClassSpaceName().value);
-            if (i < classSpaces.size() - 1) {
+                    .append(groups.get(i).getGroupName().value);
+            if (i < groups.size() - 1) {
                 builder.append("\n");
             }
         }

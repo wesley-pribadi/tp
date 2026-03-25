@@ -1,6 +1,6 @@
 {
   "persons": [],
-  "classSpaces": [ {
+  "groups": [ {
     "name": "T01",
     "assignments": [ {
       "name": "Quiz 1",

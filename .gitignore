@@ -3,6 +3,7 @@
 /.gradle-user-home/
 /.gradle-user-home-attview/
 /build/
+/bin/
 src/main/resources/docs/
 
 # IDEA files

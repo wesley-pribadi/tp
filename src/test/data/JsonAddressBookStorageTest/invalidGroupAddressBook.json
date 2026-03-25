@@ -1,0 +1,13 @@
+{
+  "persons": [],
+  "groups": [
+    {
+      "name": "T01",
+      "assignments": []
+    },
+    {
+      "name": "T#1",
+      "assignments": []
+    }
+  ]
+}

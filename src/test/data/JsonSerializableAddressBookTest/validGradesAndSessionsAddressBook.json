@@ -7,8 +7,8 @@
     "attendance": "UNINITIALISED",
     "participation": 0,
     "tags": [],
-    "classSpaces": [ "T01" ],
-    "classSpaceSessions": {
+    "groups": [ "T01" ],
+    "groupSessions": {
       "T01": [ {
         "date": "2026-01-27",
         "attendance": "PRESENT",
@@ -21,7 +21,7 @@
       }
     }
   } ],
-  "classSpaces": [ {
+  "groups": [ {
     "name": "T01",
     "assignments": [ {
       "name": "Quiz 1",
@@ -30,4 +30,3 @@
     } ]
   } ]
 }
-

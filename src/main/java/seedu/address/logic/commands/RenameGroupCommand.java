@@ -4,35 +4,35 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.classspace.ClassSpace;
-import seedu.address.model.classspace.ClassSpaceName;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Person;
 
 /**
- * Renames an existing class space.
+ * Renames an existing group.
  */
 public class RenameGroupCommand extends Command {
 
     public static final String COMMAND_WORD = "renamegroup";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Renames a class space.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Renames a group.\n"
             + "Parameters: g/OLD_GROUP_NAME new/NEW_GROUP_NAME\n"
             + "Example: " + COMMAND_WORD + " g/T01 new/Tutorial-01";
 
-    public static final String MESSAGE_GROUP_NOT_FOUND = "This class space does not exist.";
-    public static final String MESSAGE_DUPLICATE_GROUP = "Another class space with that name already exists.";
-    public static final String MESSAGE_SUCCESS = "Renamed class space %1$s to %2$s";
+    public static final String MESSAGE_GROUP_NOT_FOUND = "This group does not exist.";
+    public static final String MESSAGE_DUPLICATE_GROUP = "Another group with that name already exists.";
+    public static final String MESSAGE_SUCCESS = "Renamed group %1$s to %2$s";
 
-    private final ClassSpaceName targetName;
-    private final ClassSpaceName newName;
+    private final GroupName targetName;
+    private final GroupName newName;
 
     /**
-     * Creates a RenameGroupCommand to rename the specified class space.
+     * Creates a RenameGroupCommand to rename the specified group.
      *
-     * @param targetName The existing class space name.
-     * @param newName The new class space name.
+     * @param targetName The existing group name.
+     * @param newName The new group name.
      */
-    public RenameGroupCommand(ClassSpaceName targetName, ClassSpaceName newName) {
+    public RenameGroupCommand(GroupName targetName, GroupName newName) {
         this.targetName = targetName;
         this.newName = newName;
     }
@@ -40,21 +40,21 @@ public class RenameGroupCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        ClassSpace target = model.findClassSpaceByName(targetName)
+        Group target = model.findGroupByName(targetName)
                 .orElseThrow(() -> new CommandException(MESSAGE_GROUP_NOT_FOUND));
-        if (!targetName.equals(newName) && model.findClassSpaceByName(newName).isPresent()) {
+        if (!targetName.equals(newName) && model.findGroupByName(newName).isPresent()) {
             throw new CommandException(MESSAGE_DUPLICATE_GROUP);
         }
 
         for (Person person : java.util.List.copyOf(model.getAddressBook().getPersonList())) {
-            if (!person.hasClassSpace(targetName)) {
+            if (!person.hasGroup(targetName)) {
                 continue;
             }
-            Person updatedPerson = person.withRenamedClassSpace(targetName, newName);
+            Person updatedPerson = person.withRenamedGroup(targetName, newName);
             model.setPerson(person, updatedPerson);
         }
 
-        model.setClassSpace(target, new ClassSpace(newName, java.util.List.copyOf(target.getAssignments())));
+        model.setGroup(target, new Group(newName, java.util.List.copyOf(target.getAssignments())));
         return new CommandResult(String.format(MESSAGE_SUCCESS, targetName.value, newName.value));
     }
 

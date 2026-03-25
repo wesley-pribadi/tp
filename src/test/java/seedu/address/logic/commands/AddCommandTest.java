@@ -27,8 +27,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
-import seedu.address.model.classspace.ClassSpace;
-import seedu.address.model.classspace.ClassSpaceName;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupName;
 import seedu.address.model.person.MatricNumber;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
@@ -172,32 +172,32 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean hasClassSpace(ClassSpace classSpace) {
+        public boolean hasGroup(Group group) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public Optional<ClassSpace> findClassSpaceByName(ClassSpaceName classSpaceName) {
+        public Optional<Group> findGroupByName(GroupName groupName) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void addClassSpace(ClassSpace classSpace) {
+        public void addGroup(Group group) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void deleteClassSpace(ClassSpace target) {
+        public void deleteGroup(Group target) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void setClassSpace(ClassSpace target, ClassSpace editedClassSpace) {
+        public void setGroup(Group target, Group editedGroup) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public ObservableList<ClassSpace> getClassSpaceList() {
+        public ObservableList<Group> getGroupList() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -207,12 +207,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public void switchToClassSpaceView(ClassSpaceName classSpaceName) {
+        public void switchToGroupView(GroupName groupName) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public Optional<ClassSpaceName> getActiveClassSpaceName() {
+        public Optional<GroupName> getActiveGroupName() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -237,7 +237,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public ReadOnlyObjectProperty<ClassSpaceName> activeClassSpaceNameProperty() {
+        public ReadOnlyObjectProperty<GroupName> activeGroupNameProperty() {
             throw new AssertionError("This method should not be called.");
         }
 

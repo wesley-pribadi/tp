@@ -168,10 +168,7 @@ h5,
 h6 {
   color: #e46c0a;
 }
-
 img[src*=".png"] {
-    max-width: 55vw;
-    max-height: 55vh;
+    max-height: 60vh;
     object-fit: contain; /* Scales to fit without distortion */
-    height: auto;
 }

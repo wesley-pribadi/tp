@@ -18,20 +18,20 @@ Class StatusBarFooter
 Class CommandBox
 }
 
-package Model <<Rectangle>> {
-Class HiddenModel #FFFFFF
-}
-
 package Logic <<Rectangle>> {
 Class HiddenLogic #FFFFFF
+}
+
+package Model <<Rectangle>> {
+Class HiddenModel #FFFFFF
 }
 
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> Ui
 
 UiManager .left.|> Ui
-UiManager -down-> "1" MainWindow
-UiManager -right-> Logic
+UiManager --> "1" MainWindow
+UiManager -> Logic
 
 MainWindow --|> UiPart
 HelpWindow --|> UiPart
@@ -41,15 +41,16 @@ PersonCard --|> UiPart
 StatusBarFooter --|> UiPart
 CommandBox --|> UiPart
 
-MainWindow -left-> Logic
+MainWindow -> Logic
 
+
+MainWindow *-down-> "1" StatusBarFooter
+MainWindow *-down-> "1" ResultDisplay
+MainWindow *-down-> "1" CommandBox
 MainWindow *-down-> "1" HelpWindow
 MainWindow *-down-> "1" PersonListPanel
-MainWindow *-down-> "1" ResultDisplay
-MainWindow *-down-> "1" StatusBarFooter
-MainWindow *-down-> "1" CommandBox
 
-PersonListPanel -down-> "*" PersonCard
+PersonListPanel --down> "    *" PersonCard
 
 PersonCard ..> Model
 PersonListPanel ..> Model
@@ -59,5 +60,4 @@ HelpWindow -[hidden]left- CommandBox
 CommandBox -[hidden]left- ResultDisplay
 ResultDisplay -[hidden]left- StatusBarFooter
 
-MainWindow -[hidden]-|> UiPart
 @enduml

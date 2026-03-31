@@ -154,7 +154,7 @@ public class PersonMatchesFieldsPredicate implements Predicate<Person> {
     private boolean hasMatchingTag(Set<Tag> personTags, String keyword) {
         String lowerKeyword = keyword.toLowerCase();
         return personTags.stream()
-                .map(Tag::toString)
+                .map(tag -> tag.tagName)
                 .map(String::toLowerCase)
                 .anyMatch(tag -> tag.contains(lowerKeyword));
     }
@@ -169,7 +169,7 @@ public class PersonMatchesFieldsPredicate implements Predicate<Person> {
     private boolean hasExactTag(Set<Tag> personTags, String keyword) {
         String lowerKeyword = keyword.toLowerCase();
         return personTags.stream()
-                .map(Tag::toString)
+                .map(tag -> tag.tagName)
                 .map(String::toLowerCase)
                 .anyMatch(tag -> tag.equals(lowerKeyword));
     }

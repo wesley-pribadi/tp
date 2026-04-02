@@ -26,8 +26,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
-    private static final double INPUT_PANE_SIZE_RATIO = 0; // set to minimum size
-    private static final double RESPONSE_PANE_SIZE_RATIO = 0.4;
+    private static final double COMMANDBOX_STARTUP_SIZE = 0; // set to minimum size on startup
+    private static final double RESULTDISPLAY_STARTUP_SIZE = 0; // set to minimum size on startup
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
@@ -137,32 +137,41 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+
+        CommandBox commandBox = new CommandBox(
+                this::executeCommand,
+                // For command autocompletion feature:
+                resultDisplay::getResultText,
+                resultDisplay::setFeedbackToUser
+        );
+        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList(),
                 logic.getAddressBook().getPersonList(),
-                logic.getAddressBook().getGroupList(), logic.attendanceViewActiveProperty(),
-                logic.activeGroupNameProperty(), logic.activeSessionDateProperty(),
-                logic.visibleSessionRangeStartProperty(), logic.visibleSessionRangeEndProperty(),
+                logic.getAddressBook().getGroupList(),
+                logic.attendanceViewActiveProperty(),
+                logic.activeGroupNameProperty(),
+                logic.activeSessionDateProperty(),
+                logic.visibleSessionRangeStartProperty(),
+                logic.visibleSessionRangeEndProperty(),
                 this::executeCommand);
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath(),
+        StatusBarFooter statusBarFooter = new StatusBarFooter(
+                logic.getAddressBookFilePath(),
                 logic.currentViewProperty());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(
-                this::executeCommand,
-
-                // for command autocompletion feature
-                resultDisplay::getResultText,
-                resultDisplay::setFeedbackToUser
-        );
-        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+        // Make commandBox and resultDisplay not resize when resizing app window
+        SplitPane.setResizableWithParent(commandBoxPlaceholder, false);
+        SplitPane.setResizableWithParent(resultDisplayPlaceholder, false);
+        // Exclude personListPanelPlaceholder so that it absorbs window resizes
 
         // Startup sizes of the 3 resizeable placeholders (commandBox, resultDisplay, personListPanel)
-        Platform.runLater(() -> mainSplitPane.setDividerPositions(INPUT_PANE_SIZE_RATIO, RESPONSE_PANE_SIZE_RATIO));
+        Platform.runLater(() -> mainSplitPane.setDividerPositions(COMMANDBOX_STARTUP_SIZE, RESULTDISPLAY_STARTUP_SIZE));
     }
 
     /**

@@ -148,7 +148,7 @@ public class ViewCommand extends Command {
         model.setAttendanceViewActive(true);
         if (rangeStartDate.isPresent() || rangeEndDate.isPresent()) {
             model.setVisibleSessionRange(rangeStartDate.orElse(null), rangeEndDate.orElse(null));
-        } else {
+        } else if (shouldResetVisibleRange()) {
             model.clearVisibleSessionRange();
         }
 
@@ -200,6 +200,10 @@ public class ViewCommand extends Command {
                 model.setPerson(person, updatedPerson);
             }
         }
+    }
+
+    private boolean shouldResetVisibleRange() {
+        return attendance.isEmpty() && groupName.isEmpty() && sessionDate.isEmpty();
     }
 
     @Override

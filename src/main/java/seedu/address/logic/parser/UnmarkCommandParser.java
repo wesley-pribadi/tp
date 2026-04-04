@@ -35,19 +35,23 @@ public class UnmarkCommandParser implements Parser<UnmarkCommand> {
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_INDEXES, PREFIX_DATE, PREFIX_GROUP);
 
-        Index index = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_INDEXES).get());
-        Optional<LocalDate> date = Optional.empty();
-        if (argMultimap.getValue(PREFIX_DATE).isPresent()) {
-            date = Optional.of(ParserUtil.parseSessionDate(argMultimap.getValue(PREFIX_DATE).get()));
-        }
+        try {
+            Index index = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_INDEXES).get());
+            Optional<LocalDate> date = Optional.empty();
+            if (argMultimap.getValue(PREFIX_DATE).isPresent()) {
+                date = Optional.of(ParserUtil.parseSessionDate(argMultimap.getValue(PREFIX_DATE).get()));
+            }
 
-        Optional<GroupName> groupName = Optional.empty();
-        if (argMultimap.getValue(PREFIX_GROUP).isPresent()) {
-            groupName = Optional.of(
-                    ParserUtil.parseGroupName(argMultimap.getValue(PREFIX_GROUP).get())
-            );
-        }
+            Optional<GroupName> groupName = Optional.empty();
+            if (argMultimap.getValue(PREFIX_GROUP).isPresent()) {
+                groupName = Optional.of(
+                        ParserUtil.parseGroupName(argMultimap.getValue(PREFIX_GROUP).get())
+                );
+            }
 
-        return new UnmarkCommand(index, date, groupName);
+            return new UnmarkCommand(index, date, groupName);
+        } catch (ParseException e) {
+            throw e;
+        }
     }
 }

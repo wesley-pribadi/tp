@@ -207,14 +207,14 @@ This section describes some noteworthy details on how certain features are imple
 
 The algorithm can be found [here](http://interrobeng.com/2014/01/19/nus-matriculation-number-check-digit-algorithm/).
 
-Format: Valid matriculation number has form of `A`, followed by 7 digits (_d1d2d3d4d5d6d7_) , and ending with a checksum letter.
+Format: Valid matriculation number has form of `A`, followed by 7 digits ($d_1 d_2 d_3 d_4 d_5 d_6 d_7$) , and ending with a checksum letter.
 
 The checksum calculation is done by `MatricNumber#calculateChecksum(String matricNumber)`. <br>
 The checksum letter is one of the following 13 letters: `Y X W U R N M L J H E A B`.
 
-Step 1. Extract digits _d2d3d4d5d6d7_. <br>
-Step 2. Compute the sum of the 6 digits above.<br>
-Step 3. Map the remainder to a checksum letter by computing `r = s % 13`.
+Step 1. Extract digits $d_2 d_3 d_4 d_5 d_6 d_7$. <br>
+Step 2. Compute the `sum` of the 6 digits above.<br>
+Step 3. Map the `remainder` to a checksum letter by computing `remainder = sum % 13`.
 
 |    r    | 0  | 1  |  2 |  3 |  4 |  5 |  6 |  7 |  8 | 9  | 10 | 11 | 12 |
 |:-------:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|

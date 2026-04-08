@@ -37,7 +37,7 @@ public class MarkCommandTest {
 
     @Test
     public void execute_withoutDate_usesActiveSessionDate() {
-        // EP: no explicit date provided — active session date is used instead
+        // EP: no explicit date provided -> use active session date instead
         Model model = new ModelManager();
         model.addGroup(new Group(T01));
         model.switchToGroupView(T01);
@@ -66,7 +66,7 @@ public class MarkCommandTest {
 
     @Test
     public void execute_withExplicitDate_usesProvidedDate() {
-        // EP: date is explicitly provided via d/ — should override active session date
+        // EP: date is explicitly provided via d/ -> override active session date
         Model model = new ModelManager();
         model.addGroup(new Group(T01));
         model.switchToGroupView(T01);
@@ -95,7 +95,7 @@ public class MarkCommandTest {
 
     @Test
     public void execute_withGroupSwitch_switchesGroupAndMarks() {
-        // EP: g/ provided — command switches to that group before marking
+        // EP: g/ provided -> command switches to that group before marking
         Model model = new ModelManager();
         model.addGroup(new Group(T01));
         model.addGroup(new Group(T02));
@@ -161,7 +161,7 @@ public class MarkCommandTest {
 
     @Test
     public void execute_notInGroupView_throwsCommandException() {
-        // EP: model is in all-students view (no active group) — not in group view
+        // EP: model is in all-students view (no active group) -> throw not in group view error
         Model model = new ModelManager();
         model.addPerson(new PersonBuilder().withName("Alice").withMatricNumber(VALID_MATRIC_NUMBER_AMY)
                 .withEmail("alice@example.com").withPhone("91234567").build());

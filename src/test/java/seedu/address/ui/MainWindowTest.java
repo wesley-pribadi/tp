@@ -60,7 +60,7 @@ public class MainWindowTest {
 
     @Test
     public void isWithinAnyBounds_coordsInsideSingleScreen_returnsTrue() {
-        // EP: coordinates lie within the only screen.
+        // EP: coordinates lie within the only screen -> returns true
         List<WindowLayoutCalculator.ScreenBounds> bounds = List.of(
                 new WindowLayoutCalculator.ScreenBounds(0, 0, SCREEN_W, SCREEN_H));
 
@@ -69,7 +69,7 @@ public class MainWindowTest {
 
     @Test
     public void isWithinAnyBounds_outOfBoundsCoordinates_returnsFalse() {
-        // BVA: coordinates are far outside all screen bounds.
+        // BVA: coordinates are far outside all screen bounds -> returns false
         List<WindowLayoutCalculator.ScreenBounds> bounds = List.of(
                 new WindowLayoutCalculator.ScreenBounds(0, 0, SCREEN_W, SCREEN_H));
 
@@ -78,7 +78,7 @@ public class MainWindowTest {
 
     @Test
     public void isWithinAnyBounds_coordsOnSecondScreen_returnsTrue() {
-        // EP: coordinates miss the first screen but land on the second (multi-monitor).
+        // EP: coordinates miss the first screen but land on the second (multi-monitor) -> returns true
         List<WindowLayoutCalculator.ScreenBounds> bounds = List.of(
                 new WindowLayoutCalculator.ScreenBounds(0, 0, SCREEN_W, SCREEN_H),
                 new WindowLayoutCalculator.ScreenBounds(SCREEN_W, 0, SCREEN_W, SCREEN_H));

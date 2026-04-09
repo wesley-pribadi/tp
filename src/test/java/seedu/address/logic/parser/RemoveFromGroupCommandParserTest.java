@@ -84,4 +84,10 @@ public class RemoveFromGroupCommandParserTest {
         assertParseFailure(parser, " g/T01",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveFromGroupCommand.MESSAGE_USAGE));
     }
+
+    @Test
+    public void parse_preamble_failure() {
+        assertParseFailure(parser, " abc g/T01 i/1",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveFromGroupCommand.MESSAGE_USAGE));
+    }
 }

@@ -126,4 +126,17 @@ public class RemoveFromGroupCommandTest {
 
         assertCommandFailure(command, model, RemoveFromGroupCommand.MESSAGE_REQUIRES_GROUP_NAME_OR_ACTIVE_GROUP);
     }
+
+    @Test
+    public void execute_noTargets_returnsNoStudentsRemovedMessage() {
+        Model model = new ModelManager();
+        model.addGroup(new Group(T01));
+
+        RemoveFromGroupCommand command = RemoveFromGroupCommand.forIndexes(T01, List.of());
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        assertCommandSuccess(command, model,
+                "No students were removed from T01.", expectedModel);
+    }
 }

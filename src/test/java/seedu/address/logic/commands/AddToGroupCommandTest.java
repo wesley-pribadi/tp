@@ -14,8 +14,8 @@ import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Attendance;
 import seedu.address.model.person.MatricNumber;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.Participation;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Session;
 import seedu.address.testutil.PersonBuilder;
 

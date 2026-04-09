@@ -166,7 +166,8 @@ h3,
 h4,
 h5,
 h6 {
-  color: #e46c0a;
+  /*color: #e46c0a;*/
+    color: rgb(50, 110, 210);
 }
 
 img[src*=".png"] {

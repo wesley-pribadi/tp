@@ -281,8 +281,8 @@ Examples:
 Removes one or more students from a group. Students can be identified either by matric number or index expression. This only removes the student’s membership from the group, not the student from the TAA.
 
 Format:
-* `removefromgroup g/GROUP_NAME m/MATRIC_NUMBER [m/MATRIC_NUMBER]`
-* `removefromgroup g/GROUP_NAME i/INDEX_EXPRESSION [i/INDEX_EXPRESSION]`
+* `removefromgroup [g/GROUP_NAME] (m/MATRIC_NUMBER [m/MATRIC_NUMBER])`
+* `removefromgroup [g/GROUP_NAME] (i/INDEX_EXPRESSION)`
 
 For index expressions, TAA supports forms like:
 * i/1
@@ -347,7 +347,7 @@ Mark the attendance for a contact (with the index of the list in current view) i
 You must be in a group view using `switchgroup g/GROUP_NAME` before using this command.
 </box>
 
-Format: `mark i/INDEX d/YYYY-MM-DD`
+Format: `mark i/INDEX_EXPRESSION d/YYYY-MM-DD`
 
 * The index refers to the index number shown in the list for the current view.
 * The index **must be a positive integer** 1, 2, 3, …​
@@ -366,7 +366,7 @@ Mark the attendance for a contact (with the index of the list in current view) i
 You must be in a group view using `switchgroup g/GROUP_NAME` before using this command.
 </box>
 
-Format: `unmark i/INDEX d/YYYY-MM-DD`
+Format: `unmark i/INDEX_EXPRESSION d/YYYY-MM-DD`
 
 * The index refers to the index number shown in the list for the current view.
 * The index **must be a positive integer** 1, 2, 3, …​
@@ -1016,4 +1016,3 @@ You should refer to this section to find out more about some common errors faced
 | `Skipped duplicate group: 'X'`                                                                                                                        | Delete the group by deleting `{ "name": "X", "assignments": [ ] }` from `"preservedSkippedGroups": [ ]` , or rename the group. |
 | `Assignment names should only contain alphanumeric characters and spaces, and should not be blank`                                                    | Ensure that the assignment name follows the constraints given in the error message.                                            |
 | `Max marks should be a positive integer`                                                                                                              | Ensure that max marks is a positive integer. <br> Marks is an integer from 1 to 2147483647 due to technical limits.            |
-

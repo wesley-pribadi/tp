@@ -28,8 +28,6 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 ## **Design**
 
-hi
-
 ### Architecture
 
 -> <puml src="diagrams/ArchitectureDiagram.puml" width="400px"/> <-

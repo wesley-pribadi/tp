@@ -659,11 +659,6 @@ Use case ends.
     <p></p>
     Use case resumes at step 1.
     <p></p>
-* 1c. TAA detects a group with the new name exists.
-    * 1c1. TAA rejects the command and shows error message.
-    <p></p>
-    Use case resumes at step 1.
-    <p></p>
 
 **Use case: UC7 - Switch to a group view**
 
@@ -676,13 +671,13 @@ Use case ends.
 
 **Extensions**
 
-* 1a. TAA detects that the group view identifier is missing or invalid.
+* 1a. TAA detects that the group view identifier is missing.
     * 1a1. TAA rejects the command and shows error message.
     <p></p>
     Use case resumes at step 1.
     <p></p>
 * 1b. TAA detects that the specified group view does not exist.
-    * 2a1. TAA rejects the command and shows error message.
+    * 1b1. TAA rejects the command and shows error message.
     <p></p>
     Use case ends.
     <p></p>
@@ -726,7 +721,7 @@ Use case ends.
     <p></p>
     Use case resumes at step 4.
     <p></p>
-**Use case: UC9 - Grade assignment submission**
+**Use case: UC9 - Grade an assignment submission**
 
 **MSS**
 
@@ -768,17 +763,15 @@ Use case ends.
     <p></p>
 **Use case: UC10 - Mark attendance**
 
-UC10 behaves very similarly to !!UC8!!, but does not involve Extension 3c.
+UC10 behaves very similarly to !!UC8 - Record class participation!!, but does not involve Extension 3c.
 
 
 **Use case: UC11 - Create a session for a group**  
 
 **MSS**
 
-1. User requests to switch to a group.
-2. TAA shows the students in that group.
-3. User requests to create a session for a specific date.
-4. TAA creates the session for the group and shows a confirmation message.
+1. User requests to create a session for a specific date.
+2. TAA creates the session for the group and shows a confirmation message.
 
 Use case ends.
 
@@ -827,7 +820,7 @@ Use case ends.
     <p></p>
     Use case ends.
     <p></p>
-**Use case: UC13 - Export current view to CSV**
+**Use case: UC13 - Export current view**
 
 Preconditions: A group is currently active.
 
@@ -843,12 +836,12 @@ Use case ends.
 * 1a. TAA detects no group is currently active.
     * 1a1. TAA rejects the command and shows error message.
     <p></p>
-    Use case resumes at step 1.
+    Use case ends.
     <p></p>
 * 1b. The file cannot be written (e.g., invalid path or insufficient permissions).
     * 1b1. TAA rejects the command and shows error message.
     <p></p>
-    Use case resumes at step 1.
+    Use case ends.
     <p></p>
 
 **Use case: UC14 - Create an assignment for a group**
@@ -864,15 +857,15 @@ Use case ends.
 
 * 1a. TAA detects an assignment with the same name in the group.
     * 1a1. TAA rejects the command and shows error message.
-      <p></p>
-      Use case resumes at step 1.
-      <p></p>
+    <p></p>
+    Use case resumes at step 1.
+    <p></p>
     
 * 1b. TAA detects an invalid assignment name or max marks.
     * 1b1. TAA rejects the command and shows error message.
-      <p></p>
-      Use case resumes at step 1.
-      <p></p>
+    <p></p>
+    Use case resumes at step 1.
+    <p></p>
 
 **Use case: UC15 - Find contacts**
 
@@ -887,14 +880,14 @@ Use case ends.
 
 * 1a. TAA does not detect search terms.
     * 1a1. TAA rejects the command and shows error message.
-      <p></p>
-      Use case resumes at step 1.
-      <p></p>
+    <p></p>
+    Use case resumes at step 1.
+    <p></p>
 * 1b. TAA does not find any matching contacts.
     * 1b1. TAA returns empty list.
-      <p></p>
-      Use case ends.
-      <p></p>
+    <p></p>
+    Use case ends.
+    <p></p>
 
 **Use case: UC16 - Edit session**
 
@@ -912,25 +905,45 @@ Use case ends.
     <p></p>
     Use case resumes at step 1.
     <p></p>
-* 1b. TAA does not detect details.
+* 1b. TAA does not detect details to edit.
     * 1b1. TAA rejects the command and shows error message.
-      <p></p>
-      Use case resumes at step 1.
-      <p></p>
+    <p></p>
+    Use case resumes at step 1.
+    <p></p>
 * 1c. TAA does not find a session with the date.
     * 1c1. TAA rejects the command and shows error message.
-      <p></p>
-      Use case ends.
-      <p></p>
+    <p></p>
+    Use case ends.
+    <p></p>
 
 **Use case: UC17 - Edit assignment**
 
 **MSS**
 
-1. User requests to edit an assignment.
+1. User requests to edit an assignment for a group.
 2. TAA updates assignment details and shows a confirmation message.
 
-Use case ends
+Use case ends.
+
+**Extensions**
+
+* 1a. TAA detects that the assignment does not exist in the group.
+    * 1a1. TAA rejects the command and shows error message.
+    <p></p>
+    Use case resumes at !!UC14 - Create an assignment for a group!!.
+    <p></p>
+
+* 1b. TAA does not detect fields to edit.
+    * 1b1. TAA rejects the command and shows error message.
+    <p></p>
+    Use case resumes at step 1.
+    <p></p>
+
+* 1c. TAA detects the new max marks is lower than an existing grade record for that assignment.
+    * 1c1. TAA rejects the command and shows error message.
+    <p></p>
+    Use case resumes at step 1.
+    <p></p>
 
 ---
 

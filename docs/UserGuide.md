@@ -142,7 +142,8 @@ Adds a student contact to TAA.
 Format: `add n/NAME p/PHONE e/EMAIL m/MATRIC_NUMBER [t/TAG]…​`
 
 * Name cannot contain symbols like `;` and `<>`.
-* Name can contain apostrophes but they cannot be trailing (at the end of the name)
+* Name cannot start or end with a space, apostrophe (`'`), hyphen (`-`), or forward slash (`/`)
+* Separators like apostrophes, hyphens and forward slashes must be followed by a letter, number or combining mark.
 * Name can only be up to 300 characters long.
 * Email must be in the format local-part@domain.
 * Matric number must start with `A` followed by 7 digits and end with a valid checksum letter.

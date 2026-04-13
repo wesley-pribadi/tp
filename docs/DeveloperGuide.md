@@ -4,7 +4,11 @@ title: "Developer Guide"
 pageNav: 3
 ---
 
-# TAA Developer Guide
+<div style="font-size: 2.5rem; font-weight: normal;">
+
+TAA Developer Guide
+
+</div>
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -104,7 +108,7 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 -> <puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" width="850px"/> <-
 
-<box type="info" seamless>
+<box type="info" light>
 
 **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 
@@ -154,11 +158,11 @@ The `Model` component,
 * stores a `UserPrefs` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPrefs` object.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
-<box type="info" seamless>
+<box type="info" light>
 
 **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
 
--> <puml src="diagrams/BetterModelClassDiagram.puml" width="600px"/> <-
+-> <puml src="diagrams/BetterModelClassDiagram.puml" width="500px"/> <-
 
 </box>
 
@@ -174,7 +178,7 @@ The sequence diagram below illustrates the interactions within the `Storage` com
 
 -> <puml src="diagrams/StorageLoadSequenceDiagram.puml" width="600px"/> <-
 
-<box type="info" seamless>
+<box type="info" light>
 
 **Note:** The lifeline for `JsonSerializableAddressBook` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 
@@ -338,7 +342,7 @@ Step 3. The user executes `add n/David …​` to add a new person. The `add` co
 
 -> <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" width="400px"/> <-
 
-<box type="info" seamless>
+<box type="info" light>
 
 **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
 
@@ -348,7 +352,7 @@ Step 4. The user now decides that adding the person was a mistake, and decides t
 
 -> <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" width="400px"/> <-
 
-<box type="info" seamless>
+<box type="info" light>
 
 **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
 than attempting to perform the undo.
@@ -359,7 +363,7 @@ The following sequence diagram shows how an undo operation goes through the `Log
 
 -> <puml src="diagrams/UndoSequenceDiagram-Logic.puml" alt="UndoSequenceDiagram-Logic" width="550px"/> <-
 
-<box type="info" seamless>
+<box type="info" light>
 
 **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 
@@ -371,7 +375,7 @@ Similarly, how an undo operation goes through the `Model` component is shown bel
 
 The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
 
-<box type="info" seamless>
+<box type="info" light>
 
 **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 
@@ -436,65 +440,65 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-<box type="info" seamless>
+<box type="info" light>
 
 The term `contacts` and `students` are used interchangeably in user stories and use cases.
 
 </box>
 
-| Priority | As a …​           | I want to …​                                                  | So that I can…​                                                                               |
-|----------|-------------------|---------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
-| `* * *`  | user              | add basic contact details                                     | add students to my app                                                                        |
-| `* * *`  | user              | delete contacts                                               | remove students from my app                                                                   |
-| `* * *`  | user              | list contact details within a tutorial group                  | see all contacts within a tutorial group                                                      |
-| `* * *`  | user              | find contacts based on a search field within a tutorial group | filter and narrow my search space to certain fields                                           |
-| `* * *`  | user              | unmark attendance of a student for a tutorial session         | correct mistakes in attendance records                                                        |
-| `* * *`  | user              | verify whether a matric number is valid                       | enter correct matric numbers                                                           |
-| `* * *`  | user              | create a tutorial group                                       | keep track of new tutorial groups I am teaching                                               |
-| `* * *`  | user              | switch between different tutorial groups                      | view different tutorial groups                                                                |
-| `* * *`  | user              | delete a tutorial group                                       | delete tutorial groups I am no longer teaching                                                |
-| `* * *`  | user              | list tutorial groups                                          | see all tutorial groups I am teaching                                                         |
-| `* * *`  | user              | rename tutorial groups                                        | update the tutorial group if it changes                                                       |
-| `* * *`  | user              | add students to tutorial groups                               | sort students into their respective tutorial groups                                           |
-| `* * *`  | user              | remove students from tutorial groups                          | remove students that are no longer in a specified tutorial group                              |
-| `* * *`  | user              | add a participation score for a student for a tutorial session | keep track of student participation in tutorials                                              |
-| `* * *`  | user              | delete a participation score for a student for a tutorial session | delete unwanted participation scores                                                          |
-| `* * *`  | user              | edit participation scores for a student for a tutorial session | amend a participation score if it is wrong                                                    |
-| `* * *`  | user              | create a tutorial session                                     | mark attendance and add participation scores for a tutorial session                           |
-| `* * *`  | user              | add matric numbers of students                                | differentiate and add students with the same name                                             |
-| `* *`    | user              | edit contacts                                                 | avoid wasting time recreating contacts if there’s a typo                                      |
-| `* *`    | user              | enter information partially (e.g., only name without email)   | add information progressively as I get it                                                     |
-| `* *`    | user              | mark attendance using ID and date of a tutorial session       | keep track of attendance for tutorials                                                        |
-| `* *`    | user              | create new assignments for a tutorial group                   | keep track of assignments given to a tutorial group                                           |
-| `* *`    | user              | mark an assignment as completed or uncompleted                | keep track of the assignment progress of students                                             |
-| `* *`    | user              | delete assignments for a tutorial group                       | remove assignments I no longer need to track                                                  |
-| `* *`    | user              | edit assignments for a tutorial group                         | update assignment information                                                                 |
-| `* *`    | user              | view attendance for a tutorial session of a tutorial group    | keep track of attendance for a tutorial session of a tutorial group                           |
+| Priority | As a …​           | I want to …​                                                         | So that I can…​                                                                               |
+|----------|-------------------|----------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| `* * *`  | user              | add basic contact details                                            | add students to my app                                                                        |
+| `* * *`  | user              | delete contacts                                                      | remove students from my app                                                                   |
+| `* * *`  | user              | list contact details within a tutorial group                         | see all contacts within a tutorial group                                                      |
+| `* * *`  | user              | find contacts based on a search field within a tutorial group        | filter and narrow my search space to certain fields                                           |
+| `* * *`  | user              | unmark attendance of a student for a tutorial session                | correct mistakes in attendance records                                                        |
+| `* * *`  | user              | verify whether a matric number is valid                              | enter correct matric numbers                                                                  |
+| `* * *`  | user              | create a tutorial group                                              | keep track of new tutorial groups I am teaching                                               |
+| `* * *`  | user              | switch between different tutorial groups                             | view different tutorial groups                                                                |
+| `* * *`  | user              | delete a tutorial group                                              | delete tutorial groups I am no longer teaching                                                |
+| `* * *`  | user              | list tutorial groups                                                 | see all tutorial groups I am teaching                                                         |
+| `* * *`  | user              | rename tutorial groups                                               | update the tutorial group if it changes                                                       |
+| `* * *`  | user              | add students to tutorial groups                                      | sort students into their respective tutorial groups                                           |
+| `* * *`  | user              | remove students from tutorial groups                                 | remove students that are no longer in a specified tutorial group                              |
+| `* * *`  | user              | add a participation score for a student for a tutorial session       | keep track of student participation in tutorials                                              |
+| `* * *`  | user              | delete a participation score for a student for a tutorial session    | delete unwanted participation scores                                                          |
+| `* * *`  | user              | edit participation scores for a student for a tutorial session       | amend a participation score if it is wrong                                                    |
+| `* * *`  | user              | create a tutorial session                                            | mark attendance and add participation scores for a tutorial session                           |
+| `* * *`  | user              | add matric numbers of students                                       | differentiate and add students with the same name                                             |
+| `* *`    | user              | edit contacts                                                        | avoid wasting time recreating contacts if there’s a typo                                      |
+| `* *`    | user              | enter information partially (e.g., only name without email)          | add information progressively as I get it                                                     |
+| `* *`    | user              | mark attendance using ID and date of a tutorial session              | keep track of attendance for tutorials                                                        |
+| `* *`    | user              | create new assignments for a tutorial group                          | keep track of assignments given to a tutorial group                                           |
+| `* *`    | user              | mark an assignment as completed or uncompleted                       | keep track of the assignment progress of students                                             |
+| `* *`    | user              | delete assignments for a tutorial group                              | remove assignments I no longer need to track                                                  |
+| `* *`    | user              | edit assignments for a tutorial group                                | update assignment information                                                                 |
+| `* *`    | user              | view attendance for a tutorial session of a tutorial group           | keep track of attendance for a tutorial session of a tutorial group                           |
 | `* *`    | user              | view participation scores for a tutorial session of a tutorial group | keep track of participation scores for a tutorial session of a tutorial group                 |
-| `* *`    | first-time user   | list the possible commands easily                             | use the product without worrying about remembering commands before jumping into it            |
-| `* *`    | first-time user   | mass delete contacts                                          | play around with the app using dummy data and easily clear it when I want to put in real data |
-| `* *`    | long-term user    | import existing contact data from this app                    | restore my previous backups                                                                   |
-| `*`      | user              | have notes for certain contacts                               | pay specific attention to certain people                                                      |
-| `*`      | user              | track operation history                                       | remember when things happen and amend previous mistakes                                       |
-| `*`      | user              | identify unfinished contacts with a tag                       | ensure I remember to finish adding their details later                                        |
-| `*`      | user              | view large amounts of information in an organised and clear way | easily find specific information at a glance                                                  |
-| `*`      | user              | do a fuzzy search for names                                   | find information even if I do not remember their names fully                                  |
-| `*`      | user              | autocorrect incomplete commands                               | save time typing and correcting mistakes                                                      |
-| `*`      | user              | view an individual student's attendance records               | monitor their attendance history                                                              |
-| `*`      | user              | mark attendance with date and time                            | detect if students are late for class                                                         |
-| `*`      | user              | sort students alphabetically                                  | view my student contacts in alphabetical order                                                |
-| `*`      | user              | sort students by tutorial groups                              | view student contacts based on what tutorial group they are in                                |
-| `*`      | user              | view my students in a paginated list of 40 students per page  | view students page by page without having to keep scrolling down                              |
-|   `*`    | user              | undo my previous action                                       | undo my most recent command                                                                   |
-|   `*`    | user              | redo my previous action                                       | redo my most recent undo                                                                      |
-| `*`      | busy user         | set a recurring weekly schedule for a tutorial group          | be reminded of when my tutorial sessions are                                                  |
-| `*`      | busy user         | add a temporary tutorial session                              | keep track of additional tutorials like consultations or make-up classes                      |
-| `*`      | busy user         | view a list of my upcoming tutorials for the week             | view how many remaining tutorial sessions I have for the week                                 |
-| `*`      | colour-blind user | change the colour scheme of the UI                            | use the app easily and accessibly                                                             |
-| `*`      | first-time user   | import existing contact data from elsewhere                   | migrate easily from a different app                                                           |
-| `*`      | forgetful user    | add profile pictures for each contact                         | remember and identify students better                                                         |
-| `*`      | long-term user    | export the program data as a backup                           | prevent losing all my data if I switch devices                                                |
-| `*`      | long-term user    | make new shortcuts for commands or strings                    | use the app more efficiently                                                                  |
+| `* *`    | first-time user   | list the possible commands easily                                    | use the product without worrying about remembering commands before jumping into it            |
+| `* *`    | first-time user   | mass delete contacts                                                 | play around with the app using dummy data and easily clear it when I want to put in real data |
+| `* *`    | long-term user    | import existing contact data from this app                           | restore my previous backups                                                                   |
+| `*`      | user              | have notes for certain contacts                                      | pay specific attention to certain people                                                      |
+| `*`      | user              | track operation history                                              | remember when things happen and amend previous mistakes                                       |
+| `*`      | user              | identify unfinished contacts with a tag                              | ensure I remember to finish adding their details later                                        |
+| `*`      | user              | view large amounts of information in an organised and clear way      | easily find specific information at a glance                                                  |
+| `*`      | user              | do a fuzzy search for names                                          | find information even if I do not remember their names fully                                  |
+| `*`      | user              | autocorrect incomplete commands                                      | save time typing and correcting mistakes                                                      |
+| `*`      | user              | view an individual student's attendance records                      | monitor their attendance history                                                              |
+| `*`      | user              | mark attendance with date and time                                   | detect if students are late for class                                                         |
+| `*`      | user              | sort students alphabetically                                         | view my student contacts in alphabetical order                                                |
+| `*`      | user              | sort students by tutorial groups                                     | view student contacts based on what tutorial group they are in                                |
+| `*`      | user              | view my students in a paginated list of 40 students per page         | view students page by page without having to keep scrolling down                              |
+| `*`      | user              | undo my previous action                                              | undo my most recent command                                                                   |
+| `*`      | user              | redo my previous action                                              | redo my most recent undo                                                                      |
+| `*`      | busy user         | set a recurring weekly schedule for a tutorial group                 | be reminded of when my tutorial sessions are                                                  |
+| `*`      | busy user         | add a temporary tutorial session                                     | keep track of additional tutorials like consultations or make-up classes                      |
+| `*`      | busy user         | view a list of my upcoming tutorials for the week                    | view how many remaining tutorial sessions I have for the week                                 |
+| `*`      | colour-blind user | change the colour scheme of the UI                                   | use the app easily and accessibly                                                             |
+| `*`      | first-time user   | import existing contact data from elsewhere                          | migrate easily from a different app                                                           |
+| `*`      | forgetful user    | add profile pictures for each contact                                | remember and identify students better                                                         |
+| `*`      | long-term user    | export the program data as a backup                                  | prevent losing all my data if I switch devices                                                |
+| `*`      | long-term user    | make new shortcuts for commands or strings                           | use the app more efficiently                                                                  |
 
 ---
 
@@ -510,35 +514,24 @@ The term `contacts` and `students` are used interchangeably in user stories and 
 
 1. User chooses to add a contact with the required details.
 2. TAA adds the contact.
-
    Use case ends.
 
 **Extensions**
 
 * 1a. TAA detects missing fields.
-
     * 1a1. TAA rejects the command.
     * 1a2. User re-enters the command with the missing fields.
-  
         Steps 1a1-1a2 are repeated till all fields are present.
         Use case resumes from step 1.
-
 * 1b. TAA detects errors in fields provided.
-
     * 1b1. TAA rejects the command.
     * 1b2. User re-enters corrected fields.
-
         Steps 1b1-1b2 are repeated till all fields are correct.
-       
         Use case resumes from step 1.
-
 * 1c. TAA detects a duplicate matric number in existing contacts.
-
     * 1c1. TAA rejects the command.
     * 1c2. User re-enters the matric number field.
-  
         Steps 1c1-1c2 are repeated until contact is no longer a duplicate.
-
         Use case resumes from step 1.
 
 **Use case: UC2 - Delete a contact**
@@ -549,20 +542,15 @@ The term `contacts` and `students` are used interchangeably in user stories and 
 2.  TAA shows a list of contacts.
 3.  User requests to delete a specific contact by index.
 4.  TAA deletes the contact.
-
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty. 
-
+* 2a. The list is empty.
     Use case ends.
-
 * 3a. The given index is invalid.
-
     * 3a1. TAA rejects the command.
     * 3a2. User re-enters command with a valid index.
-
         Use case resumes at step 3.
 
 **Use case: UC3 - Edit a contact**
@@ -573,41 +561,27 @@ The term `contacts` and `students` are used interchangeably in user stories and 
 2.  TAA shows a list of contacts.
 3.  User requests to edit a specific contact in the list by index.
 4.  TAA updates the contact.
-
     Use case ends.
 
 **Extensions**
 
 * 3a. The given index is invalid.
-
     * 3a1. TAA rejects the command.
     * 3a2. User re-enters command with a valid index.
-
         Use case resumes at step 3.
-
 * 3b. No fields to edit are provided.
-
     * 3b1. TAA rejects the command.
     * 3b2. User re-enters command with the missing fields.
-
         Use case resumes at step 3.
-  
 * 3c. An edited field value is invalid.
-
     * 3c1. TAA rejects the command.
     * 3c2. User re-enters the command with the corrected fields.
-  
         Steps 3c1-3c2 are repeated until the fields are valid.
-  
         Use case resumes at step 3.
-  
 * 3d. The edit would result in a duplicate contact.
-
-    * 3d1. TAA rejects the command. 
+    * 3d1. TAA rejects the command.
     * 3d2. User re-enters command with a different matric number.
-
-        Steps 3d1-3d2 are repeated until the contact is no longer a duplicate.     
-
+        Steps 3d1-3d2 are repeated until the contact is no longer a duplicate.
         Use case resumes at step 3.
 
 **Use case: UC4 - Switch to a group view**
@@ -616,21 +590,15 @@ The term `contacts` and `students` are used interchangeably in user stories and 
 
 1.  User requests to switch to a group view.
 2.  TAA switches the active group view and shows a confirmation message.
-
     Use case ends.
 
 **Extensions**
 
 * 1a. The group view identifier is missing or invalid.
-
     * 1a1. TAA shows an error message.
-
         Use case ends.
-
 * 2a. The specified group view does not exist.
-
     * 2a1. TAA shows an error message.
-
         Use case ends.
 
 **Use case: UC5 - Record class participation**
@@ -641,21 +609,15 @@ The term `contacts` and `students` are used interchangeably in user stories and 
 2.  TAA shows a list of persons.
 3.  User requests to record participation for a specific person on a specified date.
 4.  TAA records the participation and shows a confirmation message.
-
     Use case ends.
 
 **Extensions**
 
 * 3a. The given date is invalid.
-
     * 3a1. TAA shows an error message.
-
         Use case resumes at step 2.
-
 * 4a. A participation record already exists for that person on that date.
-
     * 4a1. TAA shows a message indicating no change was made.
-
         Use case ends.
 
 **Use case: UC6 - Record assignment submission**
@@ -666,31 +628,20 @@ The term `contacts` and `students` are used interchangeably in user stories and 
 2.  TAA shows a list of persons.
 3.  User requests to record an assignment submission for a specific person.
 4.  TAA records the submission and shows a confirmation message.
-
     Use case ends.
 
 **Extensions**
 
 * 2a. The list is empty.
-
     Use case ends.
-
 * 3a. The given index is invalid.
-
     * 3a1. TAA shows an error message.
-
         Use case resumes at step 2.
-
 * 3b. The given assignment details are invalid (e.g., missing assignment name or status).
-
     * 3b1. TAA shows an error message.
-
         Use case resumes at step 2.
-
 * 4a. A submission record already exists for that assignment for that person.
-
     * 4a1. TAA shows a message indicating no change was made.
-
         Use case ends.
 
 **Use case: UC7 - Mark attendance**
@@ -701,28 +652,20 @@ The term `contacts` and `students` are used interchangeably in user stories and 
 2.  TAA shows a list of persons.
 3.  User requests to mark attendance for a person in the list.
 4.  TAA marks the attendance of that person.
-
     Use case ends.
 
 **Extensions**
 
 * 2a. The list is empty.
-
     Use case ends.
-
 * 3a. The given index is invalid.
-
     * 3a1. TAA shows an error message.
-
         Use case resumes at step 2.
-
 * 3b. The given tutorial group is invalid.
-
     * 3a1. TAA shows an error message.
-
         Use case resumes at step 2.
 
-**Use case: UC8 - Create a session for a group**  
+**Use case: UC8 - Create a session for a group**
 
 **MSS**
 
@@ -734,21 +677,13 @@ The term `contacts` and `students` are used interchangeably in user stories and 
 **Extensions**
 
 * 1a. The group does not exist.
-
     * 1a1. TAA shows an error message.
-
         Use case ends.
-  
 * 3a. The date is invalid.
-
     * 3a1. TAA shows an error message.
-    
-      Use case ends.
-
+        Use case ends.
 * 3b. A session already exists on that date.
-
     * 3b1. TAA shows an error message.
-        
         Use case ends.
 
 **Use case: UC9 - View attendance overview for a group**
@@ -759,27 +694,18 @@ The term `contacts` and `students` are used interchangeably in user stories and 
 2. TAA switches to the specified group view.
 3. User requests to view attendance for the group.
 4. TAA displays the attendance overview for the students in the group.
-
    Use case ends.
 
 **Extensions**
 
 * 1a. The specified group does not exist.
-
     * 1a1. TAA shows an error message.
-
         Use case ends.
-
 * 3a. The group has no students.
-
     * 3a1. TAA displays an empty attendance overview.
-
         Use case ends.
-
 * 3b. The group has students but no recorded sessions.
-
     * 3b1. TAA displays the attendance overview without session columns.
-
         Use case ends.
 
 **Use case: UC10 - Export current view to CSV**
@@ -790,14 +716,12 @@ Preconditions: A group is currently active.
 
 1. User requests to export the current attendance and participation view, optionally specifying a file path.
 2. TAA writes the data to the specified file (or a default filename) and shows a confirmation message with the path.
-
    Use case ends.
 
 **Extensions**
 
 * 1a. No group is currently active.
     * 1a1. TAA shows an error message.
-
         Use case ends.
 
 * 1b. The file cannot be written (e.g., invalid path or insufficient permissions).
@@ -806,6 +730,8 @@ Preconditions: A group is currently active.
         Use case ends.
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ### Non-Functional Requirements
 
@@ -837,7 +763,7 @@ Preconditions: A group is currently active.
 
 Given below are instructions to test the app manually.
 
-<box type="info">
+<box type="info" light>
 
 **Note:** These instructions only provide a starting point for testers to work on;
 testers are expected to do more *exploratory* testing.
@@ -1382,7 +1308,7 @@ testers are expected to do more *exploratory* testing.
 
 ### Handling corrupted or edge-case save files
 
-<box type="info">
+<box type="info" light>
 
 The following tests require direct editing of `TAA_savefile.json` in the `data` folder.<br>
 Back up the file before each test if you intend to continue using the existing data in your save file.

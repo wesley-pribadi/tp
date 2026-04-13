@@ -102,7 +102,7 @@ cd ~/Downloads/TAA && java -jar TAA.jar
 
 **Related FAQs:**
 * [What happens when I launch TAA for the first time?](#faq-first_time)
-* [Can I resize the input bar and result display?](#faq-resize)
+* [Can I resize the input bar and response boxes?](#faq-resize)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -889,9 +889,9 @@ When you first launch TAA, a `data` folder should be created containing `TAA_sav
 
 </panel>
 
-<panel id="faq-resize" header="Can I resize the input bar and result display?" type="seamless" expanded>
+<panel id="faq-resize" header="Can I resize the input bar and response boxes?" type="seamless" expanded>
 
-You can drag the divider between the command input bar and the result display, and the divider between the result display and the contact list, to resize them to fit your display as needed.
+You can drag the divider between the command input bar and the response box, and the divider between the response box and the contact list, to resize them to fit your display as needed.
 </panel>
 
 <panel id="faq-backup" header="How do I back up my data?" type="seamless" expanded>

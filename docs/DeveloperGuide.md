@@ -849,11 +849,6 @@ Use case ends.
     <p></p>
     Use case resumes at step 1.
     <p></p>
-* 1c. TAA detects that a session already exists on that date for all students in the group.
-    * 1c1. TAA rejects the command and shows error message.
-    <p></p>        
-    Use case resumes at step 1.
-    <p></p>
 
 **Use case: UC15 - Delete session**
 

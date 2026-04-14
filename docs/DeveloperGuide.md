@@ -762,11 +762,6 @@ Use case ends.
     <p></p>
     Use case resumes at step 2.
     <p></p>
-* 3d. TAA detects there is no session for the specified date.
-    * 3d1. TAA creates a session for the date.
-    <p></p>
-    Use case resumes at step 4.
-    <p></p>
 **Use case: UC11 - Grade an assignment submission**
 
 **Preconditions**: User is in a group view by !!UC9 - Switch to a group view!!.
@@ -1396,13 +1391,7 @@ testers are expected to do more *exploratory* testing.
 
 <p></p>
 
-5. Test case: `mark i/1 d/2020-01-01`
-    * Prerequisite: Switch back to `2026-S1-T01` using `view g/2026-S1-T01`. No session exists on `2020-01-01`.
-    * Expected: A session for `2020-01-01` is automatically created and first contact is marked as present.
-
-<p></p>
-
-6. Test case: `mark i/999 d/2026-04-10`
+5. Test case: `mark i/999 d/2026-04-10`
     * Prerequisite: No contact with index `999` exists.
     * Expected: `The person index provided is invalid`.
 
@@ -1537,7 +1526,7 @@ testers are expected to do more *exploratory* testing.
 <p></p>
 
 6. Test case: `gradea a/Quiz 2 i/1 gr/-1`
-    * Expected: `Grade should be a non-negative integer.` error message.
+    * Expected: `Grade should be a non-negative number with at most 3 decimal places.` error message.
 
 ### Deleting an assignment
 
@@ -1575,7 +1564,7 @@ testers are expected to do more *exploratory* testing.
 
 5. Test case: `exportview` (outside group view)
     * Prerequisite: Run `switchgroup all` first.
-    * Expected: `No group selected. Switch to a group before exporting the view` error message.
+    * Expected: `No group selected. Switch to a group before exporting the view.` error message.
 
 ### Viewing help
 

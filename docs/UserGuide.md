@@ -918,7 +918,7 @@ Format: `editsession d/OLD_DATE [nd/NEW_DATE] [nn/NEW_NOTE] [g/GROUP_NAME]`
 Examples:
 * `editsession d/2026-03-16 nd/2026-03-23` When `Current Group: T01`, edits the sessions date from 16 March 2026 to 23 March 2026 for group `T01`.
 * `editsession d/2026-03-16 nn/lab` When `Current Group: T01`, edits the sessions label to `lab`.
-* `editsession d/2026-03-16 nd/2026-03-23 nn/make-up tutorial` When `Current Group: T01`, edits the sessions date from 16 March 2026 to 23 March 2026 for group `T01`.
+* `editsession d/2026-03-16 nd/2026-03-23 nn/make-up tutorial` When `Current Group: T01`, edits the sessions date from 16 March 2026 to 23 March 2026 and adds a label `make-up-tutorial` for group `T01`.
 * `editsession d/2026-03-16 nd/2026-03-23 g/T01`
 
 ---

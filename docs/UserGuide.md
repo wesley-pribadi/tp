@@ -52,7 +52,7 @@ Spend less time organizing data and more time focusing on what matters most: **t
 
 <panel header="**Windows**" type=seamless expanded>
 
-1. Launch the **Terminal** app.
+1. Launch the **Command Prompt** app.
 2. Navigate to the folder for "TAA App Folder" using the `cd` (change directory) command. <br>
 For example, if you put `TAA.jar` in a folder named **TAA App Folder** in your **Downloads** folder, type the following and press enter:
 ```

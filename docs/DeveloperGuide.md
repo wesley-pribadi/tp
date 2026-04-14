@@ -692,6 +692,8 @@ Use case ends.
     Use case ends.
     <p></p>
 
+<div style="page-break-after: always;"></div>
+
 **Use case: UC8 - Remove student from group**
 
 **Preconditions**: Student is added into group by !!UC7 - Add student to group!!.
@@ -1081,7 +1083,7 @@ testers are expected to do more *exploratory* testing.
 ### Launch and shutdown
 
 1. Initial launch
-   * Download the latest `TAA.jar` file and copy into an empty folder
+   * Download the latest `TAA.jar` file and copy it into a folder of your choice.
    * Open your terminal, navigate to the folder and launch TAA using `java -jar TAA.jar`.
         * Expected: Shows the GUI with a set of sample contacts.
 
@@ -1149,6 +1151,8 @@ testers are expected to do more *exploratory* testing.
 6. Test case: `edit i/1 m/A1234567X`
    * Prerequisite: First contact has matric number `A1234567X`.
    * Expected: `A person with the same matric number already exists.` error message.
+
+<div style="page-break-after: always;"></div>
 
 ### Deleting a contact
 
@@ -1222,17 +1226,19 @@ testers are expected to do more *exploratory* testing.
 <p></p>
 
 2. Test case: `switchgroup g/2026-S1-T01`
-    * Expected: The view is filtered to show only contacts in `2026-S1-T01`. The status bar updates to show `2026-S1-T01`.
+    * Expected: The list is filtered to show only contacts in `2026-S1-T01`. The status bar updates to show `2026-S1-T01`.
 
 <p></p>
 
 3. Test case: `switchgroup all`
-    * Expected: All contacts are shown. The status bar updates to show `All Students`.
+    * Expected: All contacts are shown. The status bar updates to show `No Group Selected`.
 
 <p></p>
 
 4. Test case: `switchgroup g/T99`
     * Expected: `This group does not exist.` error message.
+
+<div style="page-break-after: always;"></div>
 
 ### Adding a contact to a group
 
@@ -1324,6 +1330,8 @@ testers are expected to do more *exploratory* testing.
 5. Test case: `addsession d/2026-13-01`
     * Expected: `Invalid month: 13. Month must be between 01 and 12.` error message.
 
+<div style="page-break-after: always;"></div>
+
 ### Editing a session
 
 1. Prerequisite: Session on `2026-04-10` exists in `2026-S1-T01`.
@@ -1392,7 +1400,7 @@ testers are expected to do more *exploratory* testing.
 <p></p>
 
 5. Test case: `mark i/999 d/2026-04-10`
-    * Prerequisite: No contact with index `999` exists.
+    * Prerequisite: No contact with index `999` exists, switch to view using `view g/2026-S1-T01`.
     * Expected: `The person index provided is invalid`.
 
 ### Assigning participation
@@ -1413,6 +1421,8 @@ testers are expected to do more *exploratory* testing.
 
 4. Test case: `part i/1 d/2026-04-10 pv/abc`
     * Expected: `Invalid command format!...` error message.
+
+<div style="page-break-after: always;"></div>
 
 ### Viewing attendance and participation
 
@@ -1504,8 +1514,8 @@ testers are expected to do more *exploratory* testing.
 
 <p></p>
 
-2. Test case: `gradea a/Quiz 2 i/1 gr/8`
-    * Expected: The first student receives a grade of `8` for `Quiz 2`.
+2. Test case: `gradea a/Quiz 2 i/1 gr/8.5`
+    * Expected: The first student receives a grade of `8.5` for `Quiz 2`.
 
 <p></p>
 
@@ -1586,6 +1596,8 @@ testers are expected to do more *exploratory* testing.
 1. Test case: `exit`
     * Expected: The application closes.
 
+<div style="page-break-after: always;"></div>
+
 ### Saving and reloading data
 
 1. Add a contact: `add n/Test User p/81111111 e/test@example.com m/A0308002Y`.
@@ -1598,8 +1610,6 @@ testers are expected to do more *exploratory* testing.
 
 3. Re-launch TAA using `java -jar TAA.jar`.
     * Expected: The contact `Test User` is still present.
-
-<div style="page-break-after: always;"></div>
 
 ### Handling corrupted or edge-case save files
 
@@ -1626,7 +1636,7 @@ Back up the file before each test if you intend to continue using the existing d
 <p></p>
 
 2. Launch TAA.
-    * Expected: TAA starts with an empty address book and displays a warning. All save operations are blocked for this session to prevent overwriting the original file.
+    * Expected: TAA starts with an empty contact list and displays a warning. All save operations are blocked for this session to prevent overwriting the original file.
 
 ### Contact referencing a non-existent group
 
@@ -1668,8 +1678,6 @@ Back up the file before each test if you intend to continue using the existing d
       * That contact is skipped. 
       * A load warning is displayed. 
       * Other contacts load normally.
-
-<div style="page-break-after: always;"></div>
 
 ## Appendix: Effort
 

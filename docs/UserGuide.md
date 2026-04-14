@@ -124,7 +124,7 @@ TAA manages **two types of information**:
 
 Most actions in TAA happen within a **group context**.
 
-- You select a group using:
+- You switch into a group using:
 ```
 switchgroup g/GROUP_NAME
 ```
@@ -428,7 +428,7 @@ Rules:
 
 <box type="tip" light>
 
-**Tip:** If the group name field is optional for that command, it is a shortcut for the [`switchgroup`](#switching-view-of-groups-switchgroup) command.
+**Tip:** If the group name field is optional for that command, supplying it acts as a shortcut for the [`switchgroup`](#switching-view-of-groups-switchgroup) command.
 
 </box>
 
@@ -470,15 +470,15 @@ Examples:
 
 ---
 
-### Listing all students: `list`
+### Listing student contact details: `list`
 
-Shows a list of all students in the current view.
+Shows a list of all students in the current group.
 
 Format: `list`
 
 Examples:
-* `list` when `current view: T01` shows a list of all the students in group `T01`.
-* `list` when `current view: All Students` shows a list of all the students in TAA.
+* `list` when `current group: T01` shows a list of all the students in group `T01`.
+* `list` when `current group: All Students` shows a list of all the students in TAA.
 
 ---
 
@@ -625,7 +625,7 @@ Format:
 
 Examples:
 *  `removefromgroup g/T01 m/A1234567X m/A2345678L` Removes students with matric number `A1234567X` and `A2345678L` from group `T01`.
-*  `removefromgroup g/Project Team i/1,3,5,7` Removes students with the index 1, 3, 5, 7 from the list in the current view from group `Project Team`.
+*  `removefromgroup g/Project Team i/1,3,5,7` Removes students with the index 1, 3, 5, 7 from the list in the current group `Project Team`.
 
 ---
 
@@ -649,15 +649,15 @@ When a group is renamed, its assignments and grades stay attached.
 
 ### Switching view of groups: `switchgroup`
 
-Switches current view into or out of a group.
+Switches into or out of a group.
 
 Format: 
 * `switchgroup g/GROUP_NAME` 
 * `switchgroup all`
 
 Examples:
-*  `switchgroup g/T01` Switches current view to `T01`
-*  `switchgroup all` Switches current view to all students
+*  `switchgroup g/T01` Switches current group to `T01`
+*  `switchgroup all` Switches out of the current group
 
 <div style="page-break-after: always;"></div>
 
@@ -668,7 +668,7 @@ Examples:
 <box type="info" light>
 
 **Info:**
-You must first switch to a group view using `switchgroup g/GROUP_NAME` before using the `part`, `mark`, `unmark` or `view` commands.
+You must first switch to a group using `switchgroup g/GROUP_NAME` before using the `part`, `mark`, `unmark` or `view` commands.
 
 </box>
 
@@ -925,7 +925,7 @@ Deletes a session for the current group or a specified group.
 Format: `deletesession d/YYYY-MM-DD [g/GROUP_NAME]`
 
 * Removes that date's session (and attendance/participation) across all students in the group.
-* If `g/GROUP_NAME` is omitted, the session is deleted from the current group view.
+* If `g/GROUP_NAME` is omitted, the session is deleted from the current group.
 * If the deleted date is currently highlighted in `view`, the highlight is cleared.
 
 Examples:
@@ -949,12 +949,12 @@ Format: `help`
 
 ---
 
-### Export the current view: `exportview`
+### Export the current session overview: `exportview`
 
 
 <box type="info" light>
 
-**Info:** This command only works when you are in a group view.
+**Info:** This command only works when you are in a group.
 
 </box>
 
@@ -962,7 +962,7 @@ Exports the currently displayed `view` matrix to a CSV-formatted file. <br>
 
 Format: `exportview [f/FILE_NAME]`
 
-* The exported CSV file contains the students shown in the current view.
+* The exported CSV file contains the students shown in the current session overview.
 * If no file name is provided, TAA will write to `[JAR file location]/view-export.csv`.
 * If a file name is provided, TAA will write to `[JAR file location]/[FILE_NAME]`
 
@@ -982,6 +982,8 @@ TAA will not automatically append `.csv` at the back of your given file name.
 
 #### CSV file format
 
+The exported CSV file contains the students shown in the current session overview.
+
 Each row represents one student.
 
 The columns are arranged as follows:
@@ -999,7 +1001,6 @@ Example:
 | Philip Cap  | PRESENT               | 0                        |
 | Brendan Tan | ABSENT                | 0                        |
 
-* The exported CSV file contains the students shown in the current view.
 
 <box type="warning" light>
 
@@ -1007,7 +1008,7 @@ Example:
 
 * **If you export again to the same file path, the existing file will be overwritten**. If you want to keep an older export, save it to a different location or rename the file before exporting again.
 
-* Avoid illegal filename characters such as `/`, `\`, `:`, `*`, `?`, `"`, `<`, `>`, and `|` in the export file name. TAA will reject file names containing these characters and ask you to choose a different name.
+* Avoid illegal filename characters such as `:`, `*`, `?`, `"`, `<`, `>`, and `|` in FILE_NAME, and only use `/` or `\` for the filepath. TAA will reject file names containing these characters and ask you to choose a different name.
 
 </box>
 
@@ -1386,6 +1387,8 @@ They will automatically be loaded back once the invalid group is fixed in `prese
 
 </box>
 
+<div style="page-break-after: always;"></div>
+
 <panel header="Here's an example of how `preservedSkippedGroups` looks if you run TAA with an invalid group!" type="seamless" expanded>
 
 ```json
@@ -1473,9 +1476,9 @@ You should refer to this section to find out more about some common errors faced
 | Contact has sessions for group `X` but is not a member of it                                                                                | Ensure that student has matching groups in `"groups": [ ]` and `"groupSessions": { }` in `"persons": [ ]`.                                                       |
 
 ### Troubleshooting manual editing of groups
-| Error shown                                                                                                      | How to fix                                                                                                                                                      |
-|:-----------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `Group names should only contain letters, numbers, spaces, hyphens, and underscores, and it should not be blank` | Ensure that the group name follows the constraints given in the error message. <br>For full list, refer to [this section](#command-parameters-and-their-rules). |
-| `Skipped duplicate group: 'X'`                                                                                   | Delete the group by deleting `{ "name": "X", "assignments": [ ] }` from `"preservedSkippedGroups": [ ]` , or rename the group.                                  |
-| `Assignment names should only contain alphanumeric characters and spaces, and should not be blank`               | Ensure that the assignment name follows the constraints given in the error message.                                                                             |
-| `Max marks should be an integer between 1 and 2147483647`                                                        | Ensure that max marks is a positive integer from 1 to 2147483647 (this number is the technical limit).                                                          |
+| Error shown                                                                                                 | How to fix                                                                                                                                                      |
+|:------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Group names should only contain letters, numbers, spaces, hyphens, and underscores, and should not be blank | Ensure that the group name follows the constraints given in the error message. <br>For full list, refer to [this section](#command-parameters-and-their-rules). |
+| Skipped duplicate group: `X`                                                                                | Delete the group by deleting `{ "name": "X", "assignments": [ ] }` from `"preservedSkippedGroups": [ ]` , or rename the group.                                  |
+| Assignment names should only contain alphanumeric characters and spaces, and should not be blank            | Ensure that the assignment name follows the constraints given in the error message.                                                                             |
+| Max marks should be an integer between 1 and 2147483647                                                     | Ensure that max marks is a positive integer from 1 to 2147483647 (this number is the technical limit).                                                          |

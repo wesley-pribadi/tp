@@ -83,6 +83,11 @@ You should see TAA launch:
 <p></p>
 <img src="images/Ui.png" alt="Ui" width="850">
 
+Here is a brief overview of the user interface:
+<p></p>
+<img src="images/LayoutOverview.png" alt="Ui" width="1000">
+<p></p>
+
 <box type="success" light>
 
 Once TAA is running, you can start by learning about the app's [Core Concepts](#core-concepts) to understand what the app can do.
@@ -461,7 +466,7 @@ Adds a student to TAA.
 Format: `add n/NAME p/PHONE e/EMAIL m/MATRIC_NUMBER [t/TAG]…​`
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com m/A1234567X t/scholar` Adds a student named "John Doe" with phone number "98765432", email "johnd@example.com", matric number "A1234567X", and one tag named "scholar", type: 
+* `add n/John Doe p/98765432 e/johnd@example.com m/A1234567X t/scholar` Adds a student named `John Doe` with phone number `98765432`, email `johnd@example.com`, matric number `A1234567X`, and one tag named `scholar`.
 
 **Related FAQs:**
 * [What is considered a duplicate student?](#faq-duplicate)
@@ -515,9 +520,9 @@ Format: `find [n/NAME]... [p/PHONE]... [e/EMAIL]... [m/MATRIC_NUMBER]... [t/TAG]
 * Multiple of the same parameter type can be used. e.g. `find n/alex n/david` returns a list of students with names containing `alex` or `david`
 
 Examples:
-* `find n/john` Returns students with the names `john` and `John Doe`
-* `find n/john p/987 e/example.com m/123 t/scholar` Returns students with a name containing `john`, a phone number containing `987`, an email containing `example.com`, a matric number containing `123` or a tag containing `scholar`
-* `find n/alex n/david` Returns the students `Alex Yeoh`, `David Li`<br>
+* `find n/john` Returns students with the names `john` and `John Doe`.
+* `find n/john p/987 e/example.com m/123 t/scholar` Returns students with a name containing `john`, a phone number containing `987`, an email containing `example.com`, a matric number containing `123` or a tag containing `scholar`.
+* `find n/alex n/david` Returns the students `Alex Yeoh`, `David Li`.<br>
   
   <img src="images/findAlexDavidResult.png" alt="result for 'find alex david'" width="800">
 
@@ -556,7 +561,7 @@ Format: `creategroup g/GROUP_NAME`
   * Example: `g/-T09` and `g/_T09` are invalid group names.
 
 Examples:
-*  `creategroup g/T01` Creates the group `T01`
+*  `creategroup g/T01` Creates the group `T01`.
 
 <box type="tip" light>
 
@@ -573,7 +578,7 @@ Deletes a tutorial group from TAA.
 Format: `deletegroup g/GROUP_NAME`
 
 Examples:
-*  `deletegroup g/T01` Deletes the group `T01`
+*  `deletegroup g/T01` Deletes the group `T01`.
 
 <box type="info" light>
 
@@ -658,7 +663,7 @@ Format:
 
 Examples:
 *  `switchgroup g/T01` Switches current group to `T01`
-*  `switchgroup all` Switches out of the current group (i.e. No Group Selected)
+*  `switchgroup all` Switches out of the current group (i.e. No Group Selected).
 
 ---
 
@@ -744,7 +749,7 @@ Shows the attendance and participation overview for the current group. <br>
 
 <img src="images/ViewUi.png" alt="Ui" width="800">
 
-Format: `view [STATUS] [d/YYYY-MM-DD] [from/YYYY-MM-DD] [to/YYYY-MM-DD] [g/GROUP_NAME] `
+Format: `view [STATUS] [d/YYYY-MM-DD] [from/YYYY-MM-DD] [to/YYYY-MM-DD] [g/GROUP_NAME]`
 
 <box type="tip" light>
 
@@ -840,7 +845,7 @@ Format:
 Note: At least one optional field should be provided.
 
 Examples:
-*  `editassignment a/Quiz 1 na/Test d/2026-04-08 mm/25` Changes existing assignment `Quiz 1` for the current group to have a name Test, a due date on 8 April 2026 and maximum marks of 25.
+*  `editassignment a/Quiz 1 na/Test d/2026-04-08 mm/25` Changes existing assignment `Quiz 1` for the current group to have a name `Test`, a due date on 8 April 2026 and maximum marks of 25.
 
 ---
 
@@ -849,7 +854,7 @@ Examples:
 Shows a list of all assignments for the current group.
 
 Format:
-* `listassignments` when `Current Group: T01` shows a list of the assignments for the group `T01`
+* `listassignments` when `Current Group: T01` shows a list of the assignments for the group `T01`.
 
 ---
 
@@ -866,7 +871,7 @@ Notes:
 * Grading again overwrites the old grade.
 
 Examples:
-*  `gradeassignment a/Quiz 1 m/A1234567X m/A2345678L gr/17` Assigns a grade of 17 for the assignment `Quiz 1` to the students with matric number A1234567X and A2345678L for the current group.
+*  `gradeassignment a/Quiz 1 m/A1234567X m/A2345678L gr/17` Assigns a grade of 17 for the assignment `Quiz 1` to the students with matric number `A1234567X` and `A2345678L` for the current group.
 
 ---
 
@@ -878,7 +883,7 @@ Format:
 * `deleteassignment a/ASSIGNMENT_NAME`
 
 Examples:
-*  `deleteassignment a/Quiz 1` Deletes the assignment `Quiz 1` for all students in the current group .
+*  `deleteassignment a/Quiz 1` Deletes the assignment `Quiz 1` for all students in the current group.
 
 ---
 
@@ -899,7 +904,7 @@ Format: `addsession d/YYYY-MM-DD [g/GROUP_NAME] [n/NOTE]`
 
 Examples:
 * `addsession d/2026-03-16` When `Current Group: T01`, adds a session of date 16 March 2026 for group `T01`.
-* `addsession d/2026-03-16 n/tutorial` When `Current Group: T01`, adds a session of date 16 March 2026 with label `tutorial` for group `T01`.
+* `addsession d/2026-03-16 n/tutorial` When `Current Group: T01`, adds a session of date 16 March 2026 with a note of `tutorial` for group `T01`.
 * `addsession d/2026-03-16 g/T01` When `Current Group: No Group Selected`, adds a session of date 16 March 2026 for group `T01`.
 
 ---
@@ -916,10 +921,10 @@ Format: `editsession d/OLD_DATE [nd/NEW_DATE] [nn/NEW_NOTE] [g/GROUP_NAME]`
 * If a session already exists on the new date for the same student, the command will be rejected to avoid overwriting data.
 
 Examples:
-* `editsession d/2026-03-16 nd/2026-03-23` When `Current Group: T01`, edits the sessions date from 16 March 2026 to 23 March 2026 for group `T01`.
-* `editsession d/2026-03-16 nn/lab` When `Current Group: T01`, edits the sessions label to `lab`.
-* `editsession d/2026-03-16 nd/2026-03-23 nn/make-up tutorial` When `Current Group: T01`, edits the sessions date from 16 March 2026 to 23 March 2026 and adds a label `make-up-tutorial` for group `T01`.
-* `editsession d/2026-03-16 nd/2026-03-23 g/T01`
+* `editsession d/2026-03-16 nd/2026-03-23` When `Current Group: T01`, edits the date of the session for 16 March 2026 and changes it to 23 March 2026 for group `T01`.
+* `editsession d/2026-03-16 nn/lab` When `Current Group: T01`, edits the note of the session for 16 March 2026 to `lab`.
+* `editsession d/2026-03-16 nd/2026-03-23 nn/make-up tutorial` When `Current Group: T01`, edits the date of the session for 16 March 2026 and changes it to 23 March 2026 and adds a note `make-up-tutorial` for group `T01`.
+* `editsession d/2026-03-16 nd/2026-03-23 g/T01` When `Current Group: No Group Selected`, edits the date of the session for 16 March 2026 and changes it to 23 March 2026 for group `T01`.
 
 ---
 
@@ -983,8 +988,8 @@ Format: `exportview [f/FILE_NAME]`
 * If a file name is provided, TAA will write to `[JAR file location]/[FILE_NAME]`
 
 Examples:
-* `exportview` When `Current Group: T01`, exports a .csv file named view-export by default containing the sessions, attendance and participation values for group `T01`.
-* `exportview f/exports/t01-view.csv` When `Current Group: T01`, exports a .csv file named `t01-view` in a folder `exports` containing the sessions, attendance and participation values for group `T01`.
+* `exportview` When `Current Group: T01`, exports to a file named `view-export.csv` containing the sessions, attendance and participation values for group `T01`.
+* `exportview f/exports/t01-view.csv` When `Current Group: T01`, exports to a file named `t01-view.csv` in a folder `exports` containing the sessions, attendance and participation values for group `T01`.
 
 For an example of the exported CSV structure, refer to the [CSV file format](#csv-file-format) section below.
 
